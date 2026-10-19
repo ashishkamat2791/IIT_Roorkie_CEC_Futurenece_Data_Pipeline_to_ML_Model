@@ -9,6 +9,7 @@
 | Quarantine | [`include/quarantine/ashish_kamat/`](include/quarantine/ashish_kamat/) |
 | Evidence | [`docs/`](docs/): profiling, business questions, data dictionary, runbook, Airflow run histories, experiment outputs, screenshots |
 | How to run | [`docs/RUNBOOK.md`](docs/RUNBOOK.md) |
+| PDF version | [`docs/submission/NammaMart_ETL_ELT_Submission_Ashish_Kamat.pdf`](docs/submission/NammaMart_ETL_ELT_Submission_Ashish_Kamat.pdf): this document plus every screenshot, the business-question results and the data dictionary. Notes: [`SUBMISSION_NOTES.txt`](docs/submission/SUBMISSION_NOTES.txt) |
 
 Every number in this document comes from an actual execution: Airflow runs on the local Astro environment (Airflow 3.3.0, Astro Runtime 3.3-2, DuckDB 1.5.6, pandas 2.3.3), or the scripts in `scripts/`. The evidence file is linked next to each claim.
 
