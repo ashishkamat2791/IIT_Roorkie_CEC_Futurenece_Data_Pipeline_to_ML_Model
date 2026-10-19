@@ -1,0 +1,8 @@
+== exp08_drift / elt (include/experiments/exp08_drift/elt/warehouse.duckdb)
+         run_id status  rows_extracted  rows_loaded  rows_quarantined                                                                                                                                                                                                              failed_tasks warnings        duration
+exp08_drift_elt FAILED            5212         5212              <NA> int_fact_orders,mart_category_margin,mart_daily_store_kpis,mart_delivery_sla,mart_payment_mode_revenue,mart_payment_reconciliation,mart_rejected_rows,mart_top_customers,record_dq_results,report,stg_orders,stg_payments          0 days 00:02:20
+
+-- dq_results that did not pass
+Empty DataFrame
+Columns: [source_file, check_name, dimension, severity, rows_checked, rows_failed, status, details]
+Index: []

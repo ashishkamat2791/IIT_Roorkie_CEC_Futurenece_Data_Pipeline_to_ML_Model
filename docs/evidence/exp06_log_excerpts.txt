@@ -1,0 +1,4 @@
+== ETL extract_orders attempt 3
+"exc_value":"orders.csv: schema contract broken. missing=['order_amount'] unexpected=['total'] header=['order_id', 'order_ts', 'customer_id', 'store_id', 'product_id', 'quantity', 'unit_price', 'discount_pct', 'total', 'payment_mode', 'order_status', 'channel', 'delivery_minutes']. Refusing to load: a renamed or dropped column would load wrong data silently."
+== ELT extract_orders attempt 3
+"exc_value":"orders.csv: schema contract broken. missing=['order_amount'] unexpected=['total'] header=['order_id', 'order_ts', 'customer_id', 'store_id', 'product_id', 'quantity', 'unit_price', 'discount_pct', 'total', 'payment_mode', 'order_status', 'channel', 'delivery_minutes']. Refusing to load: a renamed or dropped column would load wrong data silently."

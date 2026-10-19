@@ -1,0 +1,46 @@
+SET
+== DAG run
+       run_id        |  state  | run_type |          start_date           |           end_date            | seconds |           conf            
+---------------------+---------+----------+-------------------------------+-------------------------------+---------+---------------------------
+ exp03_increment_elt | success | manual   | 2026-10-18 17:25:50.557039+00 | 2026-10-18 17:26:27.209729+00 |    36.7 | {"apply_increment": true}
+(1 row)
+
+== Task instances (current try)
+           task_id           |  state  | try_number |   started    |    ended     | seconds 
+-----------------------------+---------+------------+--------------+--------------+---------
+ start_run                   | success |          1 | 17:25:50.643 | 17:25:51.724 |    1.08
+ extract_order_increment     | success |          1 | 17:25:51.888 | 17:25:53.451 |    1.56
+ extract_orders              | success |          1 | 17:25:51.889 | 17:25:53.386 |    1.50
+ extract_payments            | success |          1 | 17:25:51.894 | 17:25:53.419 |    1.52
+ extract_stores              | success |          1 | 17:25:51.898 | 17:25:53.376 |    1.48
+ extract_products            | success |          1 | 17:25:51.901 | 17:25:53.280 |    1.38
+ extract_customers           | success |          1 | 17:25:51.907 | 17:25:53.462 |    1.55
+ load_raw_order_increment    | success |          1 | 17:25:54.140 | 17:25:56.320 |    2.18
+ load_raw_payments           | success |          1 | 17:25:54.142 | 17:25:55.456 |    1.31
+ load_raw_orders             | success |          1 | 17:25:54.143 | 17:25:57.785 |    3.64
+ load_raw_customers          | success |          1 | 17:25:54.144 | 17:25:59.178 |    5.03
+ load_raw_products           | success |          1 | 17:25:54.146 | 17:26:00.438 |    6.29
+ load_raw_stores             | success |          1 | 17:25:54.146 | 17:25:56.953 |    2.81
+ stg_stores                  | success |          1 | 17:25:57.808 | 17:26:02.221 |    4.41
+ stg_customers               | success |          1 | 17:25:59.344 | 17:26:01.106 |    1.76
+ stg_products                | success |          1 | 17:26:00.837 | 17:26:03.309 |    2.47
+ stg_orders                  | success |          1 | 17:26:04.297 | 17:26:07.265 |    2.97
+ stg_payments                | success |          1 | 17:26:07.693 | 17:26:11.249 |    3.56
+ record_dq_results           | success |          1 | 17:26:12.249 | 17:26:13.606 |    1.36
+ mart_rejected_rows          | success |          1 | 17:26:14.339 | 17:26:17.060 |    2.72
+ int_fact_orders             | success |          1 | 17:26:14.342 | 17:26:15.717 |    1.37
+ mart_category_margin        | success |          1 | 17:26:16.803 | 17:26:18.477 |    1.67
+ mart_daily_store_kpis       | success |          1 | 17:26:16.803 | 17:26:20.727 |    3.92
+ mart_top_customers          | success |          1 | 17:26:16.809 | 17:26:22.617 |    5.81
+ mart_delivery_sla           | success |          1 | 17:26:16.814 | 17:26:22.213 |    5.40
+ mart_payment_reconciliation | success |          1 | 17:26:16.820 | 17:26:19.144 |    2.32
+ mart_payment_mode_revenue   | success |          1 | 17:26:19.315 | 17:26:23.351 |    4.04
+ report                      | success |          1 | 17:26:23.852 | 17:26:25.301 |    1.45
+ run_audit                   | success |          1 | 17:26:26.096 | 17:26:26.991 |    0.89
+(29 rows)
+
+== Earlier tries (task_instance_history)
+ task_id | try_number | state | started | ended 
+---------+------------+-------+---------+-------
+(0 rows)
+

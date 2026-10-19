@@ -1,0 +1,35 @@
+SET
+== DAG run
+           run_id            |  state  | run_type |          start_date           |           end_date            | seconds |                                                                                                                  conf                                                                                                                  
+-----------------------------+---------+----------+-------------------------------+-------------------------------+---------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ exp08b_drift_consistent_etl | success | manual   | 2026-10-18 17:32:08.496131+00 | 2026-10-18 17:32:32.131242+00 |    23.6 | {"data_dir": "include/experiments/exp08b_drift_consistent/data", "quarantine_dir": "include/experiments/exp08b_drift_consistent/etl/quarantine", "warehouse_path": "include/experiments/exp08b_drift_consistent/etl/warehouse.duckdb"}
+(1 row)
+
+== Task instances (current try)
+         task_id         |  state  | try_number |   started    |    ended     | seconds 
+-------------------------+---------+------------+--------------+--------------+---------
+ start_run               | success |          1 | 17:32:08.570 | 17:32:10.176 |    1.61
+ extract_payments        | success |          1 | 17:32:10.950 | 17:32:13.234 |    2.28
+ extract_order_increment | success |          1 | 17:32:10.969 | 17:32:13.045 |    2.08
+ extract_orders          | success |          1 | 17:32:10.970 | 17:32:13.179 |    2.21
+ extract_customers       | success |          1 | 17:32:10.994 | 17:32:13.077 |    2.08
+ extract_products        | success |          1 | 17:32:11.006 | 17:32:13.279 |    2.27
+ extract_stores          | success |          1 | 17:32:11.045 | 17:32:13.068 |    2.02
+ validate_customers      | success |          1 | 17:32:14.043 | 17:32:15.437 |    1.39
+ validate_stores         | success |          1 | 17:32:14.046 | 17:32:15.424 |    1.38
+ validate_products       | success |          1 | 17:32:14.046 | 17:32:15.448 |    1.40
+ validate_orders         | success |          1 | 17:32:15.998 | 17:32:17.726 |    1.73
+ validate_payments       | success |          1 | 17:32:18.286 | 17:32:19.930 |    1.64
+ quarantine_failed_rows  | success |          1 | 17:32:20.667 | 17:32:22.746 |    2.08
+ transform               | success |          1 | 17:32:23.088 | 17:32:25.301 |    2.21
+ load_warehouse          | success |          1 | 17:32:25.533 | 17:32:26.612 |    1.08
+ reconcile_payments      | success |          1 | 17:32:26.771 | 17:32:28.320 |    1.55
+ build_reports           | success |          1 | 17:32:28.694 | 17:32:29.848 |    1.15
+ run_audit               | success |          1 | 17:32:30.384 | 17:32:31.265 |    0.88
+(18 rows)
+
+== Earlier tries (task_instance_history)
+ task_id | try_number | state | started | ended 
+---------+------------+-------+---------+-------
+(0 rows)
+

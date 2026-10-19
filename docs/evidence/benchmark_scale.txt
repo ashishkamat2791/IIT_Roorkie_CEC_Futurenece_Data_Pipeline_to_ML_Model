@@ -1,0 +1,6 @@
+x10 etl  14.11 real 13.14 user 0.36 sys  345374720 maximum resident set size  "status": "SUCCESS" "september_net_revenue": 11349628.0
+x10 elt  3.42 real 5.01 user 0.51 sys  590954496 maximum resident set size  "status": "SUCCESS" "september_net_revenue": 11349628.0
+x100 etl  142.51 real 136.57 user 3.99 sys  1798750208 maximum resident set size  "status": "SUCCESS_WITH_WARNINGS" "september_net_revenue": 113496280.0
+x100 elt  16.63 real 34.07 user 1.55 sys  1733672960 maximum resident set size  "status": "SUCCESS_WITH_WARNINGS" "september_net_revenue": 113496280.0
+
+[exited with code 0]

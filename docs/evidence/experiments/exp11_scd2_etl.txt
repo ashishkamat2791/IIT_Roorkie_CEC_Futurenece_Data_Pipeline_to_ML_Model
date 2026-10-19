@@ -1,0 +1,15 @@
+== etl: versions per run
+      loaded_run_id change_type   n
+exp11_scd2_day1_etl         NEW 400
+exp11_scd2_day2_etl     CHANGED   4
+
+== history of changed customers
+customer_id full_name_masked loyalty_tier  is_active          valid_from            valid_to  is_current change_type
+     C00001        H*** I***       Bronze       True 2026-10-01 09:00:00 2026-10-02 09:00:00       False         NEW
+     C00001        H*** I***       Bronze      False 2026-10-02 09:00:00                 NaT        True     CHANGED
+     C00071        M*** P***       Silver       True 2026-10-01 09:00:00 2026-10-02 09:00:00       False         NEW
+     C00071        M*** P***         Gold       True 2026-10-02 09:00:00                 NaT        True     CHANGED
+     C00136        S*** B***       Bronze       True 2026-10-01 09:00:00 2026-10-02 09:00:00       False         NEW
+     C00136        S*** B***         Gold       True 2026-10-02 09:00:00                 NaT        True     CHANGED
+     C00236        S*** N***     Platinum       True 2026-10-01 09:00:00 2026-10-02 09:00:00       False         NEW
+     C00236        S*** N***         Gold       True 2026-10-02 09:00:00                 NaT        True     CHANGED

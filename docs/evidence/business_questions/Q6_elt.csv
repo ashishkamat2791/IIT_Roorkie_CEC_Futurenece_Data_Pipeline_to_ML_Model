@@ -1,0 +1,33 @@
+source_file,check_name,rows_rejected
+customers.csv,ALL (distinct rows),8
+customers.csv,customers_customer_id_unique,5
+customers.csv,customers_signup_not_future,3
+orders.csv,ALL (distinct rows),104
+orders.csv,orders_amount_formula,18
+orders.csv,orders_customer_id_not_null,18
+orders.csv,orders_order_id_unique,12
+orders.csv,orders_quantity_positive,10
+orders.csv,orders_product_fk,9
+orders.csv,orders_delivered_has_delivery_minutes,8
+orders.csv,orders_order_ts_not_future,7
+orders.csv,orders_delivery_minutes_lt_120,6
+orders.csv,orders_order_ts_valid,6
+orders.csv,orders_store_fk,5
+orders.csv,orders_discount_pct_range,3
+orders.csv,orders_status_allowed,3
+orders.csv,orders_payment_mode_allowed,2
+payments.csv,ALL (distinct rows),43
+payments.csv,payments_success_amount_matches_order,14
+payments.csv,payments_success_amount_positive,10
+payments.csv,payments_order_fk,8
+payments.csv,payments_payment_ts_not_future,7
+payments.csv,payments_payment_id_unique,4
+payments.csv,payments_payment_mode_allowed,2
+products.csv,ALL (distinct rows),10
+products.csv,products_cost_le_mrp,4
+products.csv,products_category_present,3
+products.csv,products_product_id_unique,2
+products.csv,products_mrp_positive,1
+stores.csv,ALL (distinct rows),2
+stores.csv,stores_capacity_positive,1
+stores.csv,stores_zone_present,1

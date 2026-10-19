@@ -1,0 +1,54 @@
+SET
+== DAG run
+                run_id                |  state  | run_type  |         start_date         |           end_date            | seconds | conf 
+--------------------------------------+---------+-----------+----------------------------+-------------------------------+---------+------
+ scheduled__2026-10-19T03:30:00+00:00 | success | scheduled | 2026-10-19 06:20:53.388+00 | 2026-10-19 06:21:28.352475+00 |    35.0 | {}
+(1 row)
+
+== Task instances (current try)
+         task_id         |  state  | try_number |   started    |    ended     | seconds 
+-------------------------+---------+------------+--------------+--------------+---------
+ start_run               | success |          2 | 06:20:53.464 | 06:20:55.017 |    1.55
+ extract_payments        | success |          2 | 06:20:55.973 | 06:20:59.407 |    3.43
+ extract_stores          | success |          2 | 06:20:55.976 | 06:20:59.078 |    3.10
+ extract_order_increment | success |          2 | 06:20:55.976 | 06:20:58.676 |    2.70
+ extract_products        | success |          2 | 06:20:55.977 | 06:20:59.344 |    3.37
+ extract_orders          | success |          2 | 06:20:55.980 | 06:20:58.986 |    3.01
+ extract_customers       | success |          2 | 06:20:55.980 | 06:20:58.788 |    2.81
+ validate_products       | success |          2 | 06:20:59.558 | 06:21:01.975 |    2.42
+ validate_customers      | success |          2 | 06:20:59.559 | 06:21:02.066 |    2.51
+ validate_stores         | success |          2 | 06:20:59.569 | 06:21:01.840 |    2.27
+ validate_orders         | success |          2 | 06:21:02.649 | 06:21:04.442 |    1.79
+ validate_payments       | success |          2 | 06:21:04.618 | 06:21:06.493 |    1.88
+ quarantine_failed_rows  | success |          2 | 06:21:06.915 | 06:21:09.147 |    2.23
+ transform               | success |          2 | 06:21:10.276 | 06:21:12.554 |    2.28
+ load_warehouse          | success |          2 | 06:21:12.715 | 06:21:19.484 |    6.77
+ reconcile_payments      | success |          1 | 06:21:19.688 | 06:21:24.797 |    5.11
+ load_customer_scd2      | success |          1 | 06:21:19.690 | 06:21:22.569 |    2.88
+ build_reports           | success |          1 | 06:21:25.071 | 06:21:25.983 |    0.91
+ run_audit               | success |          1 | 06:21:26.179 | 06:21:27.394 |    1.22
+(19 rows)
+
+== Earlier tries (task_instance_history)
+         task_id         | try_number |  state  |   started    |    ended     
+-------------------------+------------+---------+--------------+--------------
+ build_reports           |          0 | skipped |              | 
+ extract_customers       |          1 | success | 03:54:20.959 | 03:54:34.490
+ extract_order_increment |          1 | success | 03:54:21.015 | 03:54:33.975
+ extract_orders          |          1 | success | 03:54:20.952 | 03:54:35.297
+ extract_payments        |          1 | success | 03:54:20.510 | 03:54:35.007
+ extract_products        |          1 | success | 03:54:20.882 | 03:54:35.284
+ extract_stores          |          1 | success | 03:54:21.086 | 03:54:35.138
+ load_warehouse          |          1 | skipped | 03:54:51.444 | 
+ quarantine_failed_rows  |          1 | success | 03:54:45.042 | 03:54:46.839
+ reconcile_payments      |          0 | skipped |              | 
+ run_audit               |          0 | skipped |              | 
+ start_run               |          1 | success | 03:53:57.957 | 03:54:18.499
+ transform               |          1 | success | 03:54:47.970 | 03:54:51.280
+ validate_customers      |          1 | success | 03:54:36.412 | 03:54:39.828
+ validate_orders         |          1 | success | 03:54:40.744 | 03:54:41.996
+ validate_payments       |          1 | success | 03:54:43.048 | 03:54:44.447
+ validate_products       |          1 | success | 03:54:37.103 | 03:54:39.849
+ validate_stores         |          1 | success | 03:54:37.030 | 03:54:39.698
+(18 rows)
+

@@ -1,0 +1,37 @@
+SET
+== DAG run
+         run_id         | state  | run_type |          start_date           |           end_date            | seconds |                                                                                                          conf                                                                                                           
+------------------------+--------+----------+-------------------------------+-------------------------------+---------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ exp04_missing_file_etl | failed | manual   | 2026-10-18 17:26:16.643876+00 | 2026-10-18 17:28:29.743177+00 |   133.1 | {"data_dir": "include/experiments/exp04_missing_file/data", "quarantine_dir": "include/experiments/exp04_missing_file/etl/quarantine", "warehouse_path": "include/experiments/exp04_missing_file/etl/warehouse.duckdb"}
+(1 row)
+
+== Task instances (current try)
+         task_id         |      state      | try_number |   started    |    ended     | seconds 
+-------------------------+-----------------+------------+--------------+--------------+---------
+ start_run               | success         |          1 | 17:26:16.816 | 17:26:18.614 |    1.80
+ extract_orders          | success         |          1 | 17:26:19.214 | 17:26:22.472 |    3.26
+ extract_payments        | success         |          1 | 17:26:19.217 | 17:26:22.508 |    3.29
+ extract_order_increment | success         |          1 | 17:26:19.218 | 17:26:21.982 |    2.76
+ extract_customers       | success         |          1 | 17:26:19.238 | 17:26:22.254 |    3.02
+ extract_stores          | success         |          1 | 17:26:19.238 | 17:26:22.259 |    3.02
+ validate_stores         | success         |          1 | 17:26:22.679 | 17:26:23.937 |    1.26
+ validate_customers      | success         |          1 | 17:26:22.691 | 17:26:23.973 |    1.28
+ extract_products        | failed          |          3 | 17:28:23.250 | 17:28:23.860 |    0.61
+ validate_products       | upstream_failed |          0 | 17:28:24.316 | 17:28:24.316 |    0.00
+ quarantine_failed_rows  | upstream_failed |          0 | 17:28:25.366 | 17:28:25.366 |    0.00
+ transform               | upstream_failed |          0 | 17:28:25.368 | 17:28:25.368 |    0.00
+ validate_orders         | upstream_failed |          0 | 17:28:25.369 | 17:28:25.369 |    0.00
+ load_warehouse          | upstream_failed |          0 | 17:28:26.406 | 17:28:26.406 |    0.00
+ reconcile_payments      | upstream_failed |          0 | 17:28:26.408 | 17:28:26.408 |    0.00
+ validate_payments       | upstream_failed |          0 | 17:28:26.409 | 17:28:26.409 |    0.00
+ build_reports           | upstream_failed |          0 | 17:28:27.453 | 17:28:27.453 |    0.00
+ run_audit               | failed          |          1 | 17:28:28.192 | 17:28:28.800 |    0.61
+(18 rows)
+
+== Earlier tries (task_instance_history)
+     task_id      | try_number | state  |   started    |    ended     
+------------------+------------+--------+--------------+--------------
+ extract_products |          1 | failed | 17:26:19.220 | 17:26:21.618
+ extract_products |          2 | failed | 17:27:21.835 | 17:27:22.436
+(2 rows)
+

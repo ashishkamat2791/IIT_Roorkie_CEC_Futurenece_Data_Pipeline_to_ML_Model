@@ -1,0 +1,35 @@
+NammaMart Quick Commerce - ETL & ELT Pipeline Assignment
+FDAIE Module 2 - Data Engineering Foundations
+Learner: Ashish Kamat
+Submitted: 19 October 2026
+
+SOURCE CODE (GitHub)
+  https://github.com/ashishkamat2791/IIT_Roorkie_CEC_Futurenece_Data_Pipeline_to_ML_Model/tree/nammamart-assignment-ashish-kamat
+  Branch: nammamart-assignment-ashish-kamat
+  Commit: bea7ce26e7f4c9863b65efbfbf4d908568eb30c5
+
+WHAT TO READ
+  1. NammaMart_ETL_ELT_Submission_Ashish_Kamat.pdf - full submission: profiling and
+     Data Issues Log, ETL and ELT design, scheduling, data quality, governance,
+     the 10 observability experiments, CTO recommendation, bonus items, plus an
+     appendix of every screenshot, business-question SQL/results and the data dictionary.
+  2. SUBMISSION.md - the same content in Markdown, with links into the code and evidence.
+
+FOLDER LAYOUT (this zip = the files added on the branch above)
+  dags/                               nammamart_etl_ashish_kamat.py, nammamart_elt_ashish_kamat.py
+  include/nammamart_ashish_kamat/     Python helpers (extract, validate, masking, transform, load, reconcile, audit, SCD2)
+  include/sql/                        SQL: common audit DDL, ETL DDL+reports, ELT raw/staging/dq/mart
+  include/quarantine/ashish_kamat/    quarantine files with failure_reason (PII masked)
+  include/data/nammamart/            the six source CSVs, unchanged (course dataset)
+  docs/                               runbook, data dictionary, business answers, profiling,
+                                      evidence (Airflow run histories, experiments), screenshots
+  scripts/, tests/                    reproduction scripts and tests (32 + 19 passing)
+
+HOW TO RUN
+  astro dev start, then unpause both DAGs (scheduled 09:00 IST Mon-Sat) or trigger them.
+  Incremental load: trigger with --conf '{"apply_increment": true}'. See docs/RUNBOOK.md.
+
+INTENTIONALLY NOT INCLUDED
+  The DuckDB warehouse (it holds unmasked customer PII in raw_customers), virtualenvs,
+  scratch experiment data and all secrets. The Slack webhook is stored only as an
+  Airflow Variable and appears in no file.

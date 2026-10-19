@@ -1,0 +1,46 @@
+SET
+== DAG run
+        run_id         |  state  | run_type |          start_date           |           end_date            | seconds |                                                                                                         conf                                                                                                         
+-----------------------+---------+----------+-------------------------------+-------------------------------+---------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ exp07_volume_drop_elt | success | manual   | 2026-10-18 17:31:43.692288+00 | 2026-10-18 17:32:13.988143+00 |    30.3 | {"data_dir": "include/experiments/exp07_volume_drop/data", "quarantine_dir": "include/experiments/exp07_volume_drop/elt/quarantine", "warehouse_path": "include/experiments/exp07_volume_drop/elt/warehouse.duckdb"}
+(1 row)
+
+== Task instances (current try)
+           task_id           |  state  | try_number |   started    |    ended     | seconds 
+-----------------------------+---------+------------+--------------+--------------+---------
+ start_run                   | success |          1 | 17:31:43.795 | 17:31:45.356 |    1.56
+ extract_payments            | success |          1 | 17:31:45.849 | 17:31:47.682 |    1.83
+ extract_products            | success |          1 | 17:31:45.873 | 17:31:47.895 |    2.02
+ extract_customers           | success |          1 | 17:31:45.886 | 17:31:47.969 |    2.08
+ extract_stores              | success |          1 | 17:31:45.890 | 17:31:47.638 |    1.75
+ extract_order_increment     | success |          1 | 17:31:45.895 | 17:31:47.849 |    1.95
+ extract_orders              | success |          1 | 17:31:45.906 | 17:31:47.995 |    2.09
+ load_raw_payments           | success |          1 | 17:31:48.376 | 17:31:51.097 |    2.72
+ load_raw_products           | success |          1 | 17:31:48.396 | 17:31:52.711 |    4.32
+ load_raw_customers          | success |          1 | 17:31:48.397 | 17:31:53.346 |    4.95
+ load_raw_stores             | success |          1 | 17:31:48.414 | 17:31:51.840 |    3.43
+ load_raw_order_increment    | success |          1 | 17:31:48.414 | 17:31:50.735 |    2.32
+ load_raw_orders             | success |          1 | 17:31:48.422 | 17:31:50.782 |    2.36
+ stg_stores                  | success |          1 | 17:31:52.091 | 17:31:54.463 |    2.37
+ stg_customers               | success |          1 | 17:31:53.775 | 17:31:55.904 |    2.13
+ stg_products                | success |          1 | 17:31:53.776 | 17:31:54.833 |    1.06
+ stg_orders                  | success |          1 | 17:31:56.040 | 17:31:57.008 |    0.97
+ stg_payments                | success |          1 | 17:31:57.161 | 17:31:59.013 |    1.85
+ record_dq_results           | success |          1 | 17:31:59.210 | 17:32:00.495 |    1.28
+ mart_rejected_rows          | success |          1 | 17:32:00.911 | 17:32:03.593 |    2.68
+ int_fact_orders             | success |          1 | 17:32:00.912 | 17:32:01.769 |    0.86
+ mart_category_margin        | success |          1 | 17:32:02.084 | 17:32:06.629 |    4.55
+ mart_daily_store_kpis       | success |          1 | 17:32:02.084 | 17:32:05.140 |    3.06
+ mart_delivery_sla           | success |          1 | 17:32:02.087 | 17:32:04.794 |    2.71
+ mart_top_customers          | success |          1 | 17:32:02.087 | 17:32:04.369 |    2.28
+ mart_payment_reconciliation | success |          1 | 17:32:02.092 | 17:32:06.082 |    3.99
+ mart_payment_mode_revenue   | success |          1 | 17:32:06.238 | 17:32:07.508 |    1.27
+ report                      | success |          1 | 17:32:08.571 | 17:32:10.258 |    1.69
+ run_audit                   | success |          1 | 17:32:11.017 | 17:32:13.521 |    2.50
+(29 rows)
+
+== Earlier tries (task_instance_history)
+ task_id | try_number | state | started | ended 
+---------+------------+-------+---------+-------
+(0 rows)
+

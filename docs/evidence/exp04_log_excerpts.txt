@@ -1,0 +1,20 @@
+=== etl extract_products
+FileNotFoundError
+FileNotFoundError
+FileNotFoundError
+"event":"[alert] :rotating_light: NammaMart nammamart_etl_ashish_kamat task extract_products failed (run exp04_missing_file_etl, try 3): required source file missing: /usr/local/airflow/include/experiments/exp04_missing_file/data/products.csv"
+"event":"[alert] SLACK_WEBHOOK_URL Variable not set; alert logged only"
+=== etl run_audit
+[audit] pipeline_runs {\
+pipeline failed; failed tasks: build_reports,extract_products,load_warehouse,quarantine_failed_rows,reconcile_payments,transform,validate_orders,validate_payments,validate_products
+pipeline failed; failed tasks: build_reports,extract_products,load_warehouse,quarantine_failed_rows,reconcile_payments,transform,validate_orders,validate_payments,validate_products
+=== elt extract_products
+FileNotFoundError
+FileNotFoundError
+FileNotFoundError
+"event":"[alert] :rotating_light: NammaMart nammamart_elt_ashish_kamat task extract_products failed (run exp04_missing_file_elt, try 3): required source file missing: /usr/local/airflow/include/experiments/exp04_missing_file/data/products.csv"
+"event":"[alert] SLACK_WEBHOOK_URL Variable not set; alert logged only"
+=== elt run_audit
+[audit] pipeline_runs {\
+pipeline failed; failed tasks: extract_products,int_fact_orders,load_raw_products,mart_category_margin,mart_daily_store_kpis,mart_delivery_sla,mart_payment_mode_revenue,mart_payment_reconciliation,mart_rejected_rows,mart_top_customers,record_dq_results,report,stg_orders,stg_payments,stg_products
+pipeline failed; failed tasks: extract_products,int_fact_orders,load_raw_products,mart_category_margin,mart_daily_store_kpis,mart_delivery_sla,mart_payment_mode_revenue,mart_payment_reconciliation,mart_rejected_rows,mart_top_customers,record_dq_results,report,stg_orders,stg_payments,stg_products

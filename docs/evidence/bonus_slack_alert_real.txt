@@ -1,0 +1,14 @@
+# Bonus: REAL Slack alert via Airflow Variable SLACK_WEBHOOK_URL (value stored only in the Airflow metadata DB; never in code, Git or logs)
+# Runs: bonus_slack_real_etl / bonus_slack_real_elt (schema-change input, isolated data). Task-log alert lines:
+## nammamart_etl_ashish_kamat / extract_orders
+[alert] :rotating_light: NammaMart nammamart_etl_ashish_kamat task extract_orders failed (run bonus_slack_real_etl, try 1): orders.csv: schema contract broken. missing=['order_amount'] unexpected=['total'] header=['order_id', 'order_ts', 'customer_id', 'store_id', 'pr
+[alert] Slack notification sent
+## nammamart_etl_ashish_kamat / run_audit
+[alert] :rotating_light: NammaMart nammamart_etl_ashish_kamat task run_audit failed (run bonus_slack_real_etl, try 1): pipeline failed; failed tasks: extract_orders
+[alert] Slack notification sent
+## nammamart_elt_ashish_kamat / extract_orders
+[alert] :rotating_light: NammaMart nammamart_elt_ashish_kamat task extract_orders failed (run bonus_slack_real_elt, try 1): orders.csv: schema contract broken. missing=['order_amount'] unexpected=['total'] header=['order_id', 'order_ts', 'customer_id', 'store_id', 'pr
+[alert] Slack notification sent
+## nammamart_elt_ashish_kamat / run_audit
+[alert] :rotating_light: NammaMart nammamart_elt_ashish_kamat task run_audit failed (run bonus_slack_real_elt, try 1): pipeline failed; failed tasks: extract_orders
+[alert] Slack notification sent

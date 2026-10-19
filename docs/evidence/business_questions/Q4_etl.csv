@@ -1,0 +1,6 @@
+payment_mode,delivered_orders,net_revenue,mismatches,unreconciled_amount
+UPI,1205,638752.15,146,92052.45
+Card,457,251882.3,86,43656.7
+Cash on Delivery,318,181668.4,65,58170.55
+Wallet,246,138118.45,45,22602.75
+Unknown,0,0.0,2,641.0

@@ -1,0 +1,46 @@
+SET
+== DAG run
+       run_id        |  state  | run_type |          start_date           |           end_date           | seconds |                                                                                                      conf                                                                                                      
+---------------------+---------+----------+-------------------------------+------------------------------+---------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ exp09_freshness_elt | success | manual   | 2026-10-18 17:36:55.208967+00 | 2026-10-18 17:37:26.50754+00 |    31.3 | {"data_dir": "include/experiments/exp09_freshness/data", "quarantine_dir": "include/experiments/exp09_freshness/elt/quarantine", "warehouse_path": "include/experiments/exp09_freshness/elt/warehouse.duckdb"}
+(1 row)
+
+== Task instances (current try)
+           task_id           |  state  | try_number |   started    |    ended     | seconds 
+-----------------------------+---------+------------+--------------+--------------+---------
+ start_run                   | success |          1 | 17:36:55.258 | 17:36:55.956 |    0.70
+ extract_order_increment     | success |          1 | 17:36:56.379 | 17:36:57.630 |    1.25
+ extract_stores              | success |          1 | 17:36:56.381 | 17:36:57.743 |    1.36
+ extract_payments            | success |          1 | 17:36:56.383 | 17:36:57.878 |    1.49
+ extract_orders              | success |          1 | 17:36:56.384 | 17:36:57.758 |    1.37
+ extract_products            | success |          1 | 17:36:56.388 | 17:36:57.782 |    1.39
+ extract_customers           | success |          1 | 17:36:56.389 | 17:36:57.858 |    1.47
+ load_raw_order_increment    | success |          1 | 17:36:58.577 | 17:36:59.839 |    1.26
+ load_raw_customers          | success |          1 | 17:36:58.578 | 17:37:00.084 |    1.51
+ load_raw_payments           | success |          1 | 17:36:58.609 | 17:37:00.331 |    1.72
+ load_raw_stores             | success |          1 | 17:36:58.611 | 17:37:01.399 |    2.79
+ load_raw_products           | success |          1 | 17:36:58.632 | 17:37:00.763 |    2.13
+ load_raw_orders             | success |          1 | 17:36:58.647 | 17:37:02.747 |    4.10
+ stg_customers               | success |          1 | 17:37:00.850 | 17:37:04.558 |    3.71
+ stg_products                | success |          1 | 17:37:00.851 | 17:37:01.990 |    1.14
+ stg_stores                  | success |          1 | 17:37:02.057 | 17:37:03.880 |    1.82
+ stg_orders                  | success |          1 | 17:37:05.335 | 17:37:08.246 |    2.91
+ stg_payments                | success |          1 | 17:37:08.770 | 17:37:11.658 |    2.89
+ record_dq_results           | success |          1 | 17:37:12.323 | 17:37:13.883 |    1.56
+ mart_rejected_rows          | success |          1 | 17:37:14.334 | 17:37:15.366 |    1.03
+ int_fact_orders             | success |          1 | 17:37:14.335 | 17:37:16.567 |    2.23
+ mart_top_customers          | success |          1 | 17:37:17.181 | 17:37:22.473 |    5.29
+ mart_delivery_sla           | success |          1 | 17:37:17.187 | 17:37:20.269 |    3.08
+ mart_category_margin        | success |          1 | 17:37:17.191 | 17:37:22.884 |    5.69
+ mart_daily_store_kpis       | success |          1 | 17:37:17.198 | 17:37:21.200 |    4.00
+ mart_payment_reconciliation | success |          1 | 17:37:17.201 | 17:37:19.473 |    2.27
+ mart_payment_mode_revenue   | success |          1 | 17:37:20.549 | 17:37:21.910 |    1.36
+ report                      | success |          1 | 17:37:23.925 | 17:37:24.936 |    1.01
+ run_audit                   | success |          1 | 17:37:25.439 | 17:37:26.179 |    0.74
+(29 rows)
+
+== Earlier tries (task_instance_history)
+ task_id | try_number | state | started | ended 
+---------+------------+-------+---------+-------
+(0 rows)
+
