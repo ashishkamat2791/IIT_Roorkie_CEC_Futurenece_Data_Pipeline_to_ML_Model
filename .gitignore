@@ -13,3 +13,10 @@ airflow.db
 .astro/*.local.yml
 .astro/*.local.yaml
 test_api.py 
+
+# NammaMart assignment (Ashish Kamat)
+# The warehouse holds raw_customers with unmasked PII: never commit it.
+include/warehouse_ashish_kamat.duckdb
+include/warehouse_ashish_kamat.duckdb.wal
+include/tmp/
+include/experiments/
