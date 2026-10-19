@@ -491,6 +491,7 @@ What the 32 tests assert, explicitly:
 | `pipeline_runs.png` | `pipeline_runs` for every production run | same |
 | `payment_reconciliation.png` | Reconciliation by reason plus sample mismatch rows | same |
 | `dq_trend.png` | Bonus data-quality trend chart from `dq_results` | `docs/dq_trend.html` rendered headlessly |
+| `slack_alert.png` | Bonus: the four real Slack failure alerts (ETL and ELT) in `#nammamart-alerts` | Your own Slack screenshot, cropped to the messages |
 
 The four query screenshots are rendered by [`scripts/screenshots/render_query_results.py`](scripts/screenshots/render_query_results.py) from live query output; no value is typed by hand. If your evaluator expects screenshots from VS Code SQLTools instead, run the same SQL there; the SQL is printed on each image.
 
@@ -499,12 +500,19 @@ The four query screenshots are rendered by [`scripts/screenshots/render_query_re
 
 | Bonus item | Implementation | Evidence | Status |
 |---|---|---|---|
-| Alert on failure using an Airflow Variable | `audit.notify_failure` (task `on_failure_callback`) reads `SLACK_WEBHOOK_URL` with `Variable.get` at run time and posts Slack-format JSON `{"text": …}`. It fires once per task, after the final retry, and never raises. | [`docs/evidence/bonus_slack_alert_mock.txt`](docs/evidence/bonus_slack_alert_mock.txt) | VERIFIED end to end against a local mock webhook. A real Slack post needs your own webhook (see below) |
+| Alert on failure using an Airflow Variable | `audit.notify_failure` (task `on_failure_callback`) reads `SLACK_WEBHOOK_URL` with `Variable.get` at run time and posts Slack-format JSON `{"text": …}`. It fires once per task, after the final retry, and never raises. | Real Slack post: [`docs/screenshots/slack_alert.png`](docs/screenshots/slack_alert.png), [`bonus_slack_alert_real.txt`](docs/evidence/bonus_slack_alert_real.txt); mock test: [`bonus_slack_alert_mock.txt`](docs/evidence/bonus_slack_alert_mock.txt) | VERIFIED with a real Slack post (channel `#nammamart-alerts`) |
 | SCD Type 2 customer dimension (loyalty-tier history) | ETL: [`scd2.py`](include/nammamart_ashish_kamat/scd2.py), task `load_customer_scd2`, table `etl_dim_customer_scd2`. ELT: [`dim_customer_scd2.sql`](include/sql/elt/mart/dim_customer_scd2.sql), task `dim_customer_scd2`, table `elt_dim_customer_scd2` | `tests/nammamart/test_scd2.py`; Airflow runs `exp11_scd2_*` ([`exp11_scd2_*.txt`](docs/evidence/experiments/)) | VERIFIED in both pipelines; histories identical |
 | Store-capacity check | `orders_store_daily_capacity` (Consistency, Warning): daily orders per store vs `capacity_orders_per_day`, in both pipelines | Real data: 0 store-days over capacity (max 15 orders/store/day). The ×100 benchmark flagged 268 store-days, max 1,500/day ([`benchmark_scale.txt`](docs/evidence/benchmark_scale.txt)) | VERIFIED |
 | Data-quality trend chart from `dq_results` | [`scripts/dq_trend_chart.py`](scripts/dq_trend_chart.py) builds [`docs/dq_trend.html`](docs/dq_trend.html): one panel per dimension, one bar per ETL run, hover tooltips, table view, light and dark themes | [`docs/screenshots/dq_trend.png`](docs/screenshots/dq_trend.png) | VERIFIED |
 
 ### Slack alert: what was tested
+**Real Slack (19 Oct 2026).** A Slack Incoming Webhook for the app *NammaMart Alerts* was stored only as the Airflow Variable `SLACK_WEBHOOK_URL` (never in code, Git or logs; the task logs contain no `hooks.slack.com` string). Runs `bonus_slack_real_etl` and `bonus_slack_real_elt` (schema-change input) failed as intended. All four task logs show `[alert] Slack notification sent`, and the four messages arrived in `#nammamart-alerts` at 12:09 IST:
+
+![Slack alerts](docs/screenshots/slack_alert.png)
+
+The message text is cut at 300 characters on purpose (`str(exception)[:300]`), so a long schema error ends with "… a renamed or". The full error is in the task log.
+
+**Earlier mock test.** It exercised the same code path against a local webhook before a real one existed:
 1. A mock webhook server ran inside the Airflow worker container on `127.0.0.1:9099`.
 2. I set the Variable to `SLACK_WEBHOOK_URL=http://127.0.0.1:9099/services/MOCK/LOCAL`.
 3. I triggered `bonus_slack_alert_etl` and `bonus_slack_alert_elt` with the schema-change input.
@@ -548,7 +556,7 @@ To receive real messages, create a Slack Incoming Webhook and store it as the Va
 | Recommendation to the CTO | Part G (`docs/recommendation_cto.md`) | measured benchmark | VERIFIED |
 | Screenshots: Graph (both), schedule, quarantine, dq_results, pipeline_runs, reconciliation | `docs/screenshots/` | headless capture of the real UI and real query output | VERIFIED |
 | No secrets or unmasked PII in the repo outside `include/data/` | `.gitignore` (warehouse, tmp, experiments), masked quarantine | PII sweep | VERIFIED |
-| Bonus: alert via Airflow Variable | `audit.notify_failure` | `bonus_slack_alert_mock.txt` | VERIFIED against a local mock webhook (a real Slack post needs your webhook) |
+| Bonus: alert via Airflow Variable | `audit.notify_failure` | `slack_alert.png`, `bonus_slack_alert_real.txt` | VERIFIED (real Slack post) |
 | Bonus: SCD Type 2 customer dimension | `scd2.py`, `dim_customer_scd2.sql` | `test_scd2.py`, `exp11_scd2_*` runs | VERIFIED (both pipelines) |
 | Bonus: store-capacity check | `orders_store_daily_capacity` | ×100 benchmark warning (268 store-days) | VERIFIED |
 | Bonus: DQ trend chart from `dq_results` | `scripts/dq_trend_chart.py` | `docs/dq_trend.html`, `dq_trend.png` | VERIFIED |
