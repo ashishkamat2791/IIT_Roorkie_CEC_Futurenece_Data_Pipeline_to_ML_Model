@@ -1,0 +1,47 @@
+SET
+== DAG run
+        run_id         | state  | run_type |          start_date           |           end_date            | seconds |                                                                                                                conf                                                                                                                 
+-----------------------+--------+----------+-------------------------------+-------------------------------+---------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ bonus_slack_alert_elt | failed | manual   | 2026-10-19 06:17:24.399554+00 | 2026-10-19 06:17:38.166591+00 |    13.8 | {"data_dir": "include/experiments/exp06_schema_change_v2/data", "quarantine_dir": "include/experiments/exp06_schema_change_v2/elt/quarantine", "warehouse_path": "include/experiments/exp06_schema_change_v2/elt/warehouse.duckdb"}
+(1 row)
+
+== Task instances (current try)
+           task_id           |      state      | try_number |   started    |    ended     | seconds 
+-----------------------------+-----------------+------------+--------------+--------------+---------
+ start_run                   | success         |          1 | 06:17:24.574 | 06:17:26.443 |    1.87
+ extract_order_increment     | success         |          1 | 06:17:26.850 | 06:17:28.765 |    1.91
+ extract_payments            | success         |          1 | 06:17:26.852 | 06:17:28.916 |    2.06
+ extract_stores              | success         |          1 | 06:17:26.859 | 06:17:28.798 |    1.94
+ extract_orders              | failed          |          1 | 06:17:26.899 | 06:17:28.519 |    1.62
+ extract_customers           | success         |          1 | 06:17:26.927 | 06:17:28.859 |    1.93
+ extract_products            | success         |          1 | 06:17:26.934 | 06:17:28.784 |    1.85
+ load_raw_orders             | upstream_failed |          0 | 06:17:29.143 | 06:17:29.143 |    0.00
+ load_raw_payments           | success         |          1 | 06:17:29.213 | 06:17:32.081 |    2.87
+ load_raw_order_increment    | success         |          1 | 06:17:29.261 | 06:17:30.632 |    1.37
+ load_raw_stores             | success         |          1 | 06:17:29.271 | 06:17:32.658 |    3.39
+ load_raw_products           | success         |          1 | 06:17:29.294 | 06:17:34.202 |    4.91
+ load_raw_customers          | success         |          1 | 06:17:29.322 | 06:17:30.892 |    1.57
+ stg_orders                  | upstream_failed |          0 | 06:17:29.360 | 06:17:29.360 |    0.00
+ stg_payments                | upstream_failed |          0 | 06:17:30.252 | 06:17:30.252 |    0.00
+ record_dq_results           | upstream_failed |          0 | 06:17:31.718 | 06:17:31.718 |    0.00
+ stg_customers               | success         |          1 | 06:17:31.824 | 06:17:33.364 |    1.54
+ int_fact_orders             | upstream_failed |          0 | 06:17:31.877 | 06:17:31.877 |    0.00
+ mart_rejected_rows          | upstream_failed |          0 | 06:17:31.886 | 06:17:31.886 |    0.00
+ mart_category_margin        | upstream_failed |          0 | 06:17:32.687 | 06:17:32.687 |    0.00
+ mart_daily_store_kpis       | upstream_failed |          0 | 06:17:32.699 | 06:17:32.699 |    0.00
+ mart_delivery_sla           | upstream_failed |          0 | 06:17:32.702 | 06:17:32.702 |    0.00
+ mart_payment_reconciliation | upstream_failed |          0 | 06:17:32.704 | 06:17:32.704 |    0.00
+ mart_top_customers          | upstream_failed |          0 | 06:17:32.706 | 06:17:32.706 |    0.00
+ report                      | upstream_failed |          0 | 06:17:32.709 | 06:17:32.709 |    0.00
+ mart_payment_mode_revenue   | upstream_failed |          0 | 06:17:33.720 | 06:17:33.720 |    0.00
+ stg_stores                  | success         |          1 | 06:17:33.784 | 06:17:35.117 |    1.33
+ dim_customer_scd2           | success         |          1 | 06:17:33.784 | 06:17:38.004 |    4.22
+ run_audit                   | failed          |          1 | 06:17:33.786 | 06:17:36.564 |    2.78
+ stg_products                | success         |          1 | 06:17:34.977 | 06:17:36.026 |    1.05
+(30 rows)
+
+== Earlier tries (task_instance_history)
+ task_id | try_number | state | started | ended 
+---------+------------+-------+---------+-------
+(0 rows)
+
