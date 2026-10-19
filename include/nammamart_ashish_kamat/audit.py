@@ -102,3 +102,33 @@ def notify_failure(context) -> None:
         log.info("[alert] Slack notification sent")
     except Exception as exc:  # alerting must never mask the original failure
         log.warning("[alert] Slack notification failed: %s", type(exc).__name__)
+
+
+def record_dag_failure(context) -> None:
+    """DAG-level on_failure_callback (found 19 Oct 2026: the laptop slept through the 09:00 run).
+
+    When Airflow kills a run (dagrun_timeout), unfinished tasks - including the
+    all_done run_audit task - are skipped, so nothing reached pipeline_runs.
+    This callback records the run as FAILED unless run_audit already wrote a row.
+    """
+    from .config import RunConfig
+    try:
+        dr = context.get("dag_run")
+        run_id, dag_id = dr.run_id, dr.dag_id
+        cfg = RunConfig.from_params(run_id, dag_id, dict(context.get("params") or {}))
+        reason = str(context.get("reason") or "dag run failed")
+        with connect(cfg.warehouse) as con:
+            ensure_audit_tables(con)
+            exists = con.execute("SELECT count(*) FROM pipeline_runs WHERE dag_id = ? AND run_id = ?",
+                                 [dag_id, run_id]).fetchone()[0]
+        if exists:
+            return  # run_audit ran and already recorded the outcome
+        start = getattr(dr, "start_date", None)
+        write_pipeline_run(cfg.warehouse, run_id=run_id, dag_id=dag_id,
+                           start_time=start.strftime("%Y-%m-%d %H:%M:%S") if start else None,
+                           rows_extracted=None, rows_loaded=None, rows_quarantined=None,
+                           task_states={"dag_run": "failed"}, warnings=[f"run killed before audit: {reason}"],
+                           params=cfg.to_dict(), audit_task_id="run_audit")
+        log.error("[audit] %s %s recorded as FAILED by DAG callback: %s", dag_id, run_id, reason)
+    except Exception as exc:  # a callback must never raise
+        log.warning("[audit] DAG failure callback could not record the run: %s", exc)

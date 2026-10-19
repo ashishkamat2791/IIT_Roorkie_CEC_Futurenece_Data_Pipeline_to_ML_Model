@@ -67,6 +67,7 @@ def _cfg(cfg_dict: dict) -> RunConfig:
     catchup=False,
     max_active_runs=1,
     dagrun_timeout=timedelta(minutes=60),
+    on_failure_callback=audit.record_dag_failure,  # records runs killed before run_audit (e.g. timeout)
     default_args=default_args,
     params=PARAMS,
     tags=["nammamart", "elt", "ashish_kamat"],

@@ -269,3 +269,21 @@ def test_raw_load_retry_does_not_duplicate(runs):
     c = duckdb.connect(str(TEST_DIR / "wh.duckdb"), read_only=True)
     assert c.execute("SELECT count(*) FROM raw_stores WHERE _run_id = 't_elt_1'").fetchone()[0] == 15
     c.close()
+
+
+def test_dag_failure_callback_records_killed_run(runs):
+    """A run killed by dagrun_timeout skips run_audit; the DAG callback must still record it."""
+    from datetime import datetime
+    from types import SimpleNamespace
+    from include.nammamart_ashish_kamat import audit
+    rel = (TEST_DIR / "cb.duckdb").relative_to(ROOT)
+    ctx = {"dag_run": SimpleNamespace(run_id="scheduled__x", dag_id="nammamart_etl_ashish_kamat",
+                                      start_date=datetime(2026, 10, 19, 3, 53, 56)),
+           "params": {"warehouse_path": str(rel)}, "reason": "timed_out"}
+    audit.record_dag_failure(ctx)
+    audit.record_dag_failure(ctx)          # idempotent: the second call sees the existing row
+    c = duckdb.connect(str(TEST_DIR / "cb.duckdb"), read_only=True)
+    rows = c.execute("SELECT status, warnings FROM pipeline_runs").fetchall()
+    hist = c.execute("SELECT count(*) FROM pipeline_run_history").fetchone()[0]
+    c.close()
+    assert rows == [("FAILED", "run killed before audit: timed_out")] and hist == 1
