@@ -82,6 +82,10 @@ astro dev run dags trigger nammamart_etl_ashish_kamat --run-id exp05_bad_rows_et
 .venv/bin/python scripts/experiments.py verify   # proves include/data/nammamart is byte-identical to the originals
 ```
 
+Bonus SCD-2 test: run once with defaults, then with `prepare exp11_scd2_day2` data and `--conf '{"as_of": "2026-10-02 09:00:00", …}'`.
+
+Data-quality trend chart: `.venv/bin/python scripts/dq_trend_chart.py` writes `docs/dq_trend.html`.
+
 Experiments: `exp04_missing_file`, `exp05_bad_rows`, `exp06_schema_change`, `exp07_volume_drop`, `exp08_drift`, `exp08b_drift_consistent`, `exp09_freshness`.
 
 ## 6. Recovery (experiment 10)
@@ -90,6 +94,9 @@ Fix the cause, then in the UI open the failed run → failed task → **Clear** 
 
 `POST /api/v2/dags/{dag_id}/clearTaskInstances {"dag_run_id": ..., "only_failed": true, "include_downstream": true, "reset_dag_runs": true}`
 
-## 7. Alerts
+## 7. Alerts and keeping the laptop awake
+
+On a laptop, macOS sleep stops the scheduler. On 19 Oct 2026 the 09:00 run started 23 minutes late and then timed out. While demonstrating locally, keep the machine plugged in and awake (`caffeinate -i`). Production needs an always-on host.
+
 
 Set an Airflow Variable `SLACK_WEBHOOK_URL` (UI → Admin → Variables, or a secrets backend) to receive a Slack message when a task fails after its last retry. Without the Variable, the alert is only written to the task log. Never put the URL in code, `airflow_settings.yaml` or Git.

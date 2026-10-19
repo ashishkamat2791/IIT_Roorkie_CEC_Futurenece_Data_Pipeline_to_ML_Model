@@ -89,5 +89,7 @@ Only the current version of each order is stored, and only if it passed every Cr
 | `stg_*`, `stg_orders_versions` | source row / current order | typed, standardised, masked, `dq_status`, `failed_checks`, `failure_reason` |
 | `stg_dq_row_checks`, `stg_dq_dataset_checks` | row × check | outcome of every check on every staging row |
 | `dq_results` | run × check × file | quality scorecard (PK `run_id, dag_id, check_name, source_file`) |
-| `pipeline_runs` | run | run audit (PK `dag_id, run_id`) |
+| `pipeline_runs` | run | run audit, latest state (PK `dag_id, run_id`); `failed_tasks` = root cause, `upstream_failed_tasks` = collateral |
+| `pipeline_run_history` | audit write | append-only history: a FAILED attempt survives a later recovery |
+| `etl_dim_customer_scd2`, `elt_dim_customer_scd2` (bonus) | customer version | SCD Type 2: `customer_sk`, `customer_id`, `full_name_masked`, `loyalty_tier`, `is_active`, `valid_from`, `valid_to` (NULL = current), `is_current`, `change_type` (NEW/CHANGED), `loaded_run_id`. Masked name only |
 | `etl_load_log`, `elt_merge_log`, `etl_fact_orders_removed` | run | insert/update counts and removed stale versions |

@@ -7,10 +7,12 @@ nammamart_elt_ashish_kamat scheduled__2026-10-17T03:30:00+00:00 2026-10-18 17:21
 nammamart_elt_ashish_kamat                      exp02_rerun_elt 2026-10-18 17:24:16 2026-10-18 17:24:51            5212         5212               167 SUCCESS                      
 nammamart_elt_ashish_kamat                  exp03_increment_elt 2026-10-18 17:25:51 2026-10-18 17:26:26            5372         5372               167 SUCCESS                      
 nammamart_elt_ashish_kamat                      final_rerun_elt 2026-10-18 17:45:09 2026-10-18 17:45:45            5212         5212               167 SUCCESS                      
+nammamart_elt_ashish_kamat scheduled__2026-10-19T03:30:00+00:00 2026-10-19 06:20:56 2026-10-19 06:21:35            5212         5212               167 SUCCESS                      
 nammamart_etl_ashish_kamat scheduled__2026-10-17T03:30:00+00:00 2026-10-18 17:21:05 2026-10-18 17:21:30            5212         2873               167 SUCCESS                      
 nammamart_etl_ashish_kamat                      exp02_rerun_etl 2026-10-18 17:24:13 2026-10-18 17:24:39            5212         2873               167 SUCCESS                      
 nammamart_etl_ashish_kamat                  exp03_increment_etl 2026-10-18 17:25:48 2026-10-18 17:26:14            5372         3023               167 SUCCESS                      
 nammamart_etl_ashish_kamat                      final_rerun_etl 2026-10-18 17:45:06 2026-10-18 17:45:35            5212         2873               167 SUCCESS                      
+nammamart_etl_ashish_kamat scheduled__2026-10-19T03:30:00+00:00 2026-10-19 06:20:54 2026-10-19 06:21:26            5212         2873               167 SUCCESS                      
 
 -- ETL fact load log per run (exp01 insert, exp02 no-op, exp03 increment)
 SELECT run_id, source_file, inserted, updated, unchanged, skipped_older, deleted FROM etl_load_log ORDER BY loaded_at
@@ -20,13 +22,15 @@ scheduled__2026-10-17T03:30:00+00:00                                 orders.csv 
                      exp02_rerun_etl                                 orders.csv         0        0       2308              0        0
                  exp03_increment_etl orders.csv,orders_2026-10-01_increment.csv       150       10       2298              0        0
                      final_rerun_etl                                 orders.csv         0        0       2298             10        0
+scheduled__2026-10-19T03:30:00+00:00                                 orders.csv         0        0       2298             10        0
 
 -- ELT MERGE log
 SELECT run_id, source_file, rows_in_file, inserted, updated, status_changed, skipped_older, extra_copies FROM elt_merge_log ORDER BY merged_at
 
-             run_id                     source_file  rows_in_file  inserted  updated  status_changed  skipped_older  extra_copies
-exp03_increment_elt orders_2026-10-01_increment.csv           160       150       10              10              0             0
-    final_rerun_elt orders_2026-10-01_increment.csv           160       150       10              10              0             0
+                              run_id                     source_file  rows_in_file  inserted  updated  status_changed  skipped_older  extra_copies
+                 exp03_increment_elt orders_2026-10-01_increment.csv           160       150       10              10              0             0
+                     final_rerun_elt orders_2026-10-01_increment.csv           160       150       10              10              0             0
+scheduled__2026-10-19T03:30:00+00:00 orders_2026-10-01_increment.csv           160       150       10              10              0             0
 
 -- ELT raw history: rows per table per run (append-only)
 SELECT 'raw_orders' AS tbl, _run_id, _source_file, count(*) AS n FROM raw_orders GROUP BY ALL UNION ALL SELECT 'raw_payments', _run_id, _source_file, count(*) FROM raw_payments GROUP BY ALL UNION ALL SELECT 'raw_customers', _run_id, _source_file, count(*) FROM raw_customers GROUP BY ALL ORDER BY 1, 2, 3
@@ -36,15 +40,18 @@ raw_customers                      exp02_rerun_elt                   customers.c
 raw_customers                  exp03_increment_elt                   customers.csv  405
 raw_customers                      final_rerun_elt                   customers.csv  405
 raw_customers scheduled__2026-10-17T03:30:00+00:00                   customers.csv  405
+raw_customers scheduled__2026-10-19T03:30:00+00:00                   customers.csv  405
    raw_orders                      exp02_rerun_elt                      orders.csv 2412
    raw_orders                  exp03_increment_elt                      orders.csv 2412
    raw_orders                  exp03_increment_elt orders_2026-10-01_increment.csv  160
    raw_orders                      final_rerun_elt                      orders.csv 2412
    raw_orders scheduled__2026-10-17T03:30:00+00:00                      orders.csv 2412
+   raw_orders scheduled__2026-10-19T03:30:00+00:00                      orders.csv 2412
  raw_payments                      exp02_rerun_elt                    payments.csv 2228
  raw_payments                  exp03_increment_elt                    payments.csv 2228
  raw_payments                      final_rerun_elt                    payments.csv 2228
  raw_payments scheduled__2026-10-17T03:30:00+00:00                    payments.csv 2228
+ raw_payments scheduled__2026-10-19T03:30:00+00:00                    payments.csv 2228
 
 -- Fact / staging uniqueness
 SELECT 'etl_fact_orders' AS tbl, count(*) AS n_rows, count(DISTINCT order_id) AS n_ids FROM etl_fact_orders UNION ALL SELECT 'stg_orders', count(*), count(DISTINCT order_id) FROM stg_orders UNION ALL SELECT 'int_fact_orders', count(*), count(DISTINCT order_id) FROM int_fact_orders
@@ -78,6 +85,7 @@ ORD000017    DELIVERED                      orders.csv                      exp0
 ORD000017     RETURNED orders_2026-10-01_increment.csv                  exp03_increment_elt         1
 ORD000017    DELIVERED                      orders.csv                  exp03_increment_elt      1256
 ORD000017    DELIVERED                      orders.csv                      final_rerun_elt      1256
+ORD000017    DELIVERED                      orders.csv scheduled__2026-10-19T03:30:00+00:00      1256
 
 -- dq_results scorecard trend (failed rows per dimension per run)
 SELECT dag_id, run_id, dimension, sum(rows_failed) AS rows_failed, count(*) FILTER (WHERE status <> 'PASS') AS checks_not_passing FROM dq_results GROUP BY ALL ORDER BY dag_id, min(checked_at), dimension
@@ -107,6 +115,12 @@ nammamart_elt_ashish_kamat                      final_rerun_elt  Consistency    
 nammamart_elt_ashish_kamat                      final_rerun_elt   Timeliness         17.0                   3
 nammamart_elt_ashish_kamat                      final_rerun_elt   Uniqueness         23.0                   4
 nammamart_elt_ashish_kamat                      final_rerun_elt     Validity         40.0                   8
+nammamart_elt_ashish_kamat scheduled__2026-10-19T03:30:00+00:00     Accuracy         50.0                   7
+nammamart_elt_ashish_kamat scheduled__2026-10-19T03:30:00+00:00 Completeness         36.0                   5
+nammamart_elt_ashish_kamat scheduled__2026-10-19T03:30:00+00:00  Consistency         62.0                   8
+nammamart_elt_ashish_kamat scheduled__2026-10-19T03:30:00+00:00   Timeliness         17.0                   3
+nammamart_elt_ashish_kamat scheduled__2026-10-19T03:30:00+00:00   Uniqueness         23.0                   4
+nammamart_elt_ashish_kamat scheduled__2026-10-19T03:30:00+00:00     Validity         40.0                   8
 nammamart_etl_ashish_kamat scheduled__2026-10-17T03:30:00+00:00     Accuracy         50.0                   7
 nammamart_etl_ashish_kamat scheduled__2026-10-17T03:30:00+00:00 Completeness         36.0                   5
 nammamart_etl_ashish_kamat scheduled__2026-10-17T03:30:00+00:00  Consistency         62.0                   8
@@ -131,3 +145,9 @@ nammamart_etl_ashish_kamat                      final_rerun_etl  Consistency    
 nammamart_etl_ashish_kamat                      final_rerun_etl   Timeliness         17.0                   3
 nammamart_etl_ashish_kamat                      final_rerun_etl   Uniqueness         23.0                   4
 nammamart_etl_ashish_kamat                      final_rerun_etl     Validity         40.0                   8
+nammamart_etl_ashish_kamat scheduled__2026-10-19T03:30:00+00:00     Accuracy         50.0                   7
+nammamart_etl_ashish_kamat scheduled__2026-10-19T03:30:00+00:00 Completeness         36.0                   5
+nammamart_etl_ashish_kamat scheduled__2026-10-19T03:30:00+00:00  Consistency         62.0                   8
+nammamart_etl_ashish_kamat scheduled__2026-10-19T03:30:00+00:00   Timeliness         17.0                   3
+nammamart_etl_ashish_kamat scheduled__2026-10-19T03:30:00+00:00   Uniqueness         23.0                   4
+nammamart_etl_ashish_kamat scheduled__2026-10-19T03:30:00+00:00     Validity         40.0                   8

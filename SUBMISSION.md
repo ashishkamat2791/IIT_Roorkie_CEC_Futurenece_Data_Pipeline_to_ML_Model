@@ -226,7 +226,13 @@ DAG tests run inside the Airflow image ([`tests/dags/test_nammamart_dags.py`](te
 1. **Cron expression:** `0 9 * * 1-6` (minute 0, hour 9, Monday–Saturday), interpreted in the DAG timezone `Asia/Kolkata`.
 2. **What the UI shows in UTC:** **03:30 UTC** (IST = UTC+05:30). The first real scheduled run appears in the metadata DB as `scheduled__2026-10-17T03:30:00+00:00`, with logical date `2026-10-17T03:30:00+00:00`. In the UI with the +05:30 display setting, it shows as 09:00. Airflow stores `start_date` internally as `2026-09-30T18:30:00Z`.
 3. **If `start_date` had been UTC:** the cron is evaluated in the DAG timezone. With a UTC `start_date`, `0 9 * * 1-6` fires at 09:00 **UTC = 14:30 IST**, five and a half hours after the 9:30 stand-up. The fix is either a tz-aware IST `start_date` (as here) or a cron of `30 3 * * 1-6` in UTC.
-4. **If the laptop or Docker is off at 9 AM:** nothing runs; the scheduler is a process inside Docker. When it comes back, `catchup=False` creates **one** run for the most recent missed slot. This happened for real: unpausing on Sunday 18 Oct immediately created the Saturday 17 Oct 09:00 run. Older missed days are not backfilled. Because the data is a full snapshot and the load is idempotent, one catch-up run brings the report up to date, but it is late and the 9:30 SLA is missed.
+4. **If the laptop or Docker is off at 9 AM:** nothing runs; the scheduler is a process inside Docker. When it comes back, `catchup=False` creates **one** run for the most recent missed slot. This happened for real: unpausing on Sunday 18 Oct immediately created the Saturday 17 Oct 09:00 run. Older missed days are not backfilled. Because the data is a full snapshot and the load is idempotent, one catch-up run brings the report up to date, but it is late and the 9:30 SLA is missed. **It then happened unplanned on Monday 19 Oct.** The Mac was asleep on battery at 09:00 IST ([`laptop_sleep_2026-10-19_pmset.txt`](docs/evidence/laptop_sleep_2026-10-19_pmset.txt)):
+   - A 45-second maintenance wake at 09:23:44 started `scheduled__2026-10-19T03:30:00+00:00` 23 minutes late.
+   - The Mac slept again at 09:24:29, mid-task.
+   - At the next wake (10:24:44), the task's Airflow execution token had expired (`API_SERVER_ERROR 403 Invalid auth token`), and the 60-minute `dagrun_timeout` failed both runs.
+   - Because of the timeout, `run_audit` was **skipped**, so the failure never reached `pipeline_runs`. I fixed that with a DAG-level `on_failure_callback` (`audit.record_dag_failure`) that records a run killed before its audit.
+   - I recovered by clearing the runs once the machine was awake; both succeeded ([`scheduled_2026-10-19_laptop_sleep_then_clear_*.txt`](docs/evidence/airflow_runs/)).
+   - The report was ready roughly 3 hours late, which is exactly why production needs an always-on host (point 7).
 5. **Why `catchup=False`:** each run reads the current full export, not a date-partitioned slice. Replaying 30 missed days would process the same files 30 times for no benefit and would compete for the single DuckDB writer. Historical periods are rebuilt from raw history (ELT) instead.
 6. **Retries and timeout:** two retries one minute apart absorb a file landing late or a DuckDB lock. The 15-minute timeout stops a hung task from silently consuming the 09:00–09:30 window, and the failure alert fires after the last try. For deterministic failures such as a schema change, retries are skipped (see experiment 6).
 7. **Production availability:** a laptop cannot meet an SLA. Run Airflow on an always-on host or a managed service (an Astro Deployment, a VM with systemd, or Kubernetes) with:
@@ -374,6 +380,7 @@ Evidence locations:
 | 9 | Latest order 30 days old | ETL / ELT | Freshness warning | **SUCCESS_WITH_WARNINGS** in both: `orders_freshness: latest valid order_ts 2026-09-21 10:15:00 is 238.8h before cut-off 2026-10-01 09:00:00 (threshold 24h)`. Shifting the dates also moved 2 formerly future orders (2026-10-21) into September, so they became valid (fact 2,310) | `experiments/exp09_freshness_*.txt` | Escalate staleness over 48 h to block publishing, and alert at 09:15 |
 | 10 | Recovery with Clear | ETL | Only failed + downstream re-run | After restoring `products.csv`, cleared `extract_products` with downstream + only-failed (API `clearTaskInstances`, the same action as UI Clear). **Only** `extract_products` (try **4**) and its 9 downstream tasks re-ran. The 8 successful tasks (start_run, 5 extracts, 2 validations) kept try 1 and their original timestamps. Run → **SUCCESS**; pipeline_runs → SUCCESS | `airflow_runs/exp10_recovery_etl.txt` | Observed: the audit upsert **overwrote** the FAILED row. **Fixed:** append-only `pipeline_run_history` keeps every audit write |
 | 10 | Recovery with Clear | ELT | same | Only `extract_products`, `load_raw_products`, `stg_products` and downstream re-ran; the other 5 raw loads (try 1) were not repeated, so no duplicate raw rows. Run → **SUCCESS** | `airflow_runs/exp10_recovery_elt.txt` | same |
+| 11 (unplanned) | Laptop asleep at 09:00 IST on Mon 19 Oct | ETL / ELT | Run late or not at all | Started 23 min late during a 45 s maintenance wake; the Mac slept mid-task; on resume the task's token was rejected (`403 Invalid auth token`); `dagrun_timeout` (60 min) failed both runs; **run_audit was skipped, so no `pipeline_runs` row**. Recovered with Clear: both **SUCCESS** | `airflow_runs/scheduled_2026-10-19_laptop_sleep_then_clear_*.txt`, `laptop_sleep_2026-10-19_*.txt` | **Fixed:** DAG-level `on_failure_callback` records runs killed before the audit (unit-tested). Production: an always-on host, plus a 09:15 deadline alert |
 | 4+10 v2 | Missing file + Clear, re-run after the audit fixes | ETL / ELT | Root cause separated; FAILED attempt kept | `pipeline_run_history` now holds 2 rows per run: **FAILED** (`failed_tasks=extract_products`, collateral listed separately in `upstream_failed_tasks`), then **SUCCESS** after Clear. `pipeline_runs` shows the latest state | `experiments/exp04_v2_audit_history_*.txt`, `airflow_runs/exp04_v2_recovery_*.txt` | verified |
 
 ### Five pillars of data observability
@@ -439,7 +446,7 @@ Evidence locations:
 | Suite | Command | Result |
 |---|---|---|
 | Profiling (original data) | `.venv/bin/python scripts/profile_nammamart.py` | VERIFIED: 260 issues logged; reports in `docs/profiling/` |
-| End-to-end and unit tests (no Airflow) | `.venv/bin/python -m pytest tests/nammamart -q` | **27 passed** (after all fixes) |
+| End-to-end and unit tests (no Airflow) | `.venv/bin/python -m pytest tests/nammamart -q` | **32 passed** (after all fixes, including the bonus SCD-2 and DAG-callback tests) |
 | DAG structure and parse tests (inside the Airflow image) | `docker exec … python -m pytest tests/dags` (equivalent to `astro dev pytest tests/dags`) | **19 passed** (10 of mine plus 9 from the trainer's import, tag and retry tests) |
 | Import errors | `airflow dags list-import-errors` | VERIFIED: `No data found` |
 | ETL vs ELT parity | `scripts/compare_etl_elt.py` | VERIFIED: all 8 comparisons MATCH. dq_results: 0 count differences after exp03; on the final runs, only the increment-file checks differ, because ETL did not read that file |
@@ -447,7 +454,7 @@ Evidence locations:
 | PII sweep of committable files | raw emails, phones and names from customers.csv and manager names, searched across every tracked or untracked non-ignored file | VERIFIED: no raw PII outside `include/data/` |
 | Source files unchanged | `scripts/experiments.py verify` | VERIFIED: all 6 MD5s equal the originals |
 
-What the 27 tests assert, explicitly:
+What the 32 tests assert, explicitly:
 - Source copies are unchanged.
 - Masking rules.
 - A missing file, a schema change and a header-only file each fail loudly.
@@ -467,6 +474,8 @@ What the 27 tests assert, explicitly:
 - All business answers match.
 - Eight audit rows exist.
 - A raw-load retry does not duplicate rows.
+- SCD-2 in both pipelines: 400 NEW → 4 CHANGED → no-op on re-run → no-op on an older replay; ETL and ELT histories identical.
+- The DAG failure callback records a run killed before its audit, exactly once.
 
 
 
@@ -481,9 +490,46 @@ What the 27 tests assert, explicitly:
 | `dq_results.png` | Non-passing `dq_results` rows for the increment runs | real read-only query on the production warehouse, rendered and screenshotted |
 | `pipeline_runs.png` | `pipeline_runs` for every production run | same |
 | `payment_reconciliation.png` | Reconciliation by reason plus sample mismatch rows | same |
+| `dq_trend.png` | Bonus data-quality trend chart from `dq_results` | `docs/dq_trend.html` rendered headlessly |
 
 The four query screenshots are rendered by [`scripts/screenshots/render_query_results.py`](scripts/screenshots/render_query_results.py) from live query output; no value is typed by hand. If your evaluator expects screenshots from VS Code SQLTools instead, run the same SQL there; the SQL is printed on each image.
 
+
+## Bonus
+
+| Bonus item | Implementation | Evidence | Status |
+|---|---|---|---|
+| Alert on failure using an Airflow Variable | `audit.notify_failure` (task `on_failure_callback`) reads `SLACK_WEBHOOK_URL` with `Variable.get` at run time and posts Slack-format JSON `{"text": …}`. It fires once per task, after the final retry, and never raises. | [`docs/evidence/bonus_slack_alert_mock.txt`](docs/evidence/bonus_slack_alert_mock.txt) | VERIFIED end to end against a local mock webhook. A real Slack post needs your own webhook (see below) |
+| SCD Type 2 customer dimension (loyalty-tier history) | ETL: [`scd2.py`](include/nammamart_ashish_kamat/scd2.py), task `load_customer_scd2`, table `etl_dim_customer_scd2`. ELT: [`dim_customer_scd2.sql`](include/sql/elt/mart/dim_customer_scd2.sql), task `dim_customer_scd2`, table `elt_dim_customer_scd2` | `tests/nammamart/test_scd2.py`; Airflow runs `exp11_scd2_*` ([`exp11_scd2_*.txt`](docs/evidence/experiments/)) | VERIFIED in both pipelines; histories identical |
+| Store-capacity check | `orders_store_daily_capacity` (Consistency, Warning): daily orders per store vs `capacity_orders_per_day`, in both pipelines | Real data: 0 store-days over capacity (max 15 orders/store/day). The ×100 benchmark flagged 268 store-days, max 1,500/day ([`benchmark_scale.txt`](docs/evidence/benchmark_scale.txt)) | VERIFIED |
+| Data-quality trend chart from `dq_results` | [`scripts/dq_trend_chart.py`](scripts/dq_trend_chart.py) builds [`docs/dq_trend.html`](docs/dq_trend.html): one panel per dimension, one bar per ETL run, hover tooltips, table view, light and dark themes | [`docs/screenshots/dq_trend.png`](docs/screenshots/dq_trend.png) | VERIFIED |
+
+### Slack alert: what was tested
+1. A mock webhook server ran inside the Airflow worker container on `127.0.0.1:9099`.
+2. I set the Variable to `SLACK_WEBHOOK_URL=http://127.0.0.1:9099/services/MOCK/LOCAL`.
+3. I triggered `bonus_slack_alert_etl` and `bonus_slack_alert_elt` with the schema-change input.
+4. The mock received four `application/json` POSTs. For each pipeline:
+   - the root cause: `":rotating_light: NammaMart nammamart_etl_ashish_kamat task extract_orders failed (run bonus_slack_alert_etl, try 1): orders.csv: schema contract broken. missing=['order_amount'] unexpected=['total'] …"`;
+   - the run summary from `run_audit`: `"pipeline failed; failed tasks: extract_orders"`.
+5. I deleted the Variable and stopped the mock afterwards.
+
+To receive real messages, create a Slack Incoming Webhook and store it as the Variable (Admin → Variables, or `astro dev run variables set SLACK_WEBHOOK_URL <url>`). Never put it in code or Git.
+
+### SCD Type 2: how it works and what was observed
+- **Tracked attributes:** `loyalty_tier` and `is_active`. `valid_from` and `valid_to` are batch cut-offs.
+- **Rules:** a new customer gets a `NEW` version. A changed tracked attribute in a *newer* batch closes the current version (`valid_to` = cut-off, `is_current = false`) and inserts a `CHANGED` version. Re-running the same batch, or replaying an older one, is a no-op.
+- **Test input:** `scripts/experiments.py prepare exp11_scd2_day2` builds the next-day CRM export: C00136 Bronze → Gold, C00236 Platinum → Gold, C00071 Silver → Gold, C00001 active → inactive.
+- **Observed** (local tests and Airflow runs, both pipelines):
+
+  | Run | Result |
+  |---|---|
+  | Day 1 | 400 NEW |
+  | Day 2 | 4 CHANGED, 404 versions in total |
+  | Day 2 again | 0 changes |
+  | Day 1 replayed late | 0 changes |
+
+  C00136's history reads Bronze (valid 2026-10-01 09:00 → 2026-10-02 09:00), then Gold (current). ETL and ELT histories are identical row for row.
+- **Use:** join facts to the tier valid at order time with `order_ts >= valid_from AND (order_ts < valid_to OR valid_to IS NULL)`. The current-state reports keep using the type-1 dimension.
 
 ## Submission checklist
 
@@ -502,8 +548,7 @@ The four query screenshots are rendered by [`scripts/screenshots/render_query_re
 | Recommendation to the CTO | Part G (`docs/recommendation_cto.md`) | measured benchmark | VERIFIED |
 | Screenshots: Graph (both), schedule, quarantine, dq_results, pipeline_runs, reconciliation | `docs/screenshots/` | headless capture of the real UI and real query output | VERIFIED |
 | No secrets or unmasked PII in the repo outside `include/data/` | `.gitignore` (warehouse, tmp, experiments), masked quarantine | PII sweep | VERIFIED |
-| Bonus: alert via Airflow Variable | `audit.notify_failure` | exp04 log: "SLACK_WEBHOOK_URL Variable not set; alert logged only" | PARTIAL: the code path is verified, but no real Slack post was sent because no webhook was provided |
+| Bonus: alert via Airflow Variable | `audit.notify_failure` | `bonus_slack_alert_mock.txt` | VERIFIED against a local mock webhook (a real Slack post needs your webhook) |
+| Bonus: SCD Type 2 customer dimension | `scd2.py`, `dim_customer_scd2.sql` | `test_scd2.py`, `exp11_scd2_*` runs | VERIFIED (both pipelines) |
 | Bonus: store-capacity check | `orders_store_daily_capacity` | ×100 benchmark warning (268 store-days) | VERIFIED |
-| Bonus: DQ trend from `dq_results` | trend query in Part D and `exp01_03_production_warehouse.txt` | tabular only | PARTIAL: no chart |
-| Bonus: SCD-2 customer dimension | not built (design described in E9) | none | NOT DONE |
-
+| Bonus: DQ trend chart from `dq_results` | `scripts/dq_trend_chart.py` | `docs/dq_trend.html`, `dq_trend.png` | VERIFIED |

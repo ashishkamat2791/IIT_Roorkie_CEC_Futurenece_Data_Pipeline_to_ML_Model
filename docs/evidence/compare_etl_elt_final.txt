@@ -7,6 +7,7 @@ MATCH  Q4a revenue by payment mode + unreconciled: ETL rows=5 ELT rows=5
 MATCH  Q4b reconciliation rows: ETL rows=344 ELT rows=344
 MATCH  Q5 top 10 customers: ETL rows=10 ELT rows=10
 MATCH  Q6 rejected rows by file and check (latest ETL run vs current ELT staging): ETL rows=32 ELT rows=32
+MATCH  Bonus SCD2 customer history (all versions): ETL rows=400 ELT rows=400
 MATCH  Fact rows (order_id, status, net_revenue, gross_margin, within_15_min): ETL rows=2458 ELT rows=2458
 
 September ETL: delivered_orders=2076 net_revenue=1130769.10 gross_margin=265448.45 delivered_without_cost=57
