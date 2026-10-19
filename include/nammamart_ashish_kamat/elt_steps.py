@@ -139,6 +139,20 @@ def build_mart(cfg: RunConfig, name: str) -> dict:
     return {"table": name, "rows": n}
 
 
+def customer_scd2(cfg: RunConfig) -> dict:
+    """Bonus: SCD Type 2 customer dimension (loyalty-tier history) in SQL."""
+    with connect(cfg.warehouse) as con:
+        with transaction(con):
+            run_sql_file(con, "elt/mart/dim_customer_scd2.sql", params={"as_of": cfg.as_of, "run_id": cfg.run_id})
+        r = con.execute("""SELECT count(*) FILTER (WHERE change_type = 'NEW' AND loaded_run_id = ?),
+                                  count(*) FILTER (WHERE change_type = 'CHANGED' AND loaded_run_id = ?),
+                                  count(*), count(*) FILTER (WHERE is_current) FROM elt_dim_customer_scd2""",
+                        [cfg.run_id, cfg.run_id]).fetchone()
+    stats = dict(zip(["new", "changed", "versions_total", "current_total"], r))
+    log.info("[scd2] elt_dim_customer_scd2 %s", stats)
+    return stats
+
+
 def report(cfg: RunConfig) -> dict:
     out = {}
     with connect(cfg.warehouse, read_only=False) as con:

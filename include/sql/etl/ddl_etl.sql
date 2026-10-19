@@ -118,3 +118,19 @@ CREATE TABLE IF NOT EXISTS etl_rejected_rows (
     quarantine_file VARCHAR,
     PRIMARY KEY (run_id, source_file, check_name)
 );
+
+-- Bonus: SCD Type 2 customer dimension keeping loyalty-tier (and is_active) history.
+-- One row per customer version; valid_from/valid_to are batch cut-offs, so a re-run of the
+-- same batch is a no-op and an older batch never rewrites newer history.
+CREATE TABLE IF NOT EXISTS etl_dim_customer_scd2 (
+    customer_sk       VARCHAR PRIMARY KEY,   -- customer_id || '@' || valid_from
+    customer_id       VARCHAR NOT NULL,
+    full_name_masked  VARCHAR,
+    loyalty_tier      VARCHAR,
+    is_active         BOOLEAN,
+    valid_from        TIMESTAMP NOT NULL,
+    valid_to          TIMESTAMP,             -- NULL while current
+    is_current        BOOLEAN NOT NULL,
+    change_type       VARCHAR NOT NULL,      -- NEW | CHANGED
+    loaded_run_id     VARCHAR NOT NULL
+);

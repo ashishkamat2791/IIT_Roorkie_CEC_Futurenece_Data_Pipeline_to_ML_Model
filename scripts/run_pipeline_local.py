@@ -39,6 +39,7 @@ def run_etl(cfg: RunConfig) -> dict:
         q = etl_steps.quarantine(cfg, list(v.values()))
         tr = etl_steps.transform_step(cfg, v)
         ld = etl_steps.load_step(cfg, tr)
+        out["scd2"] = etl_steps.customer_scd2_step(cfg, tr)
         rc = etl_steps.reconcile_step(cfg, v["payments"], v["orders"])
         rp = etl_steps.report_step(cfg)
         out.update(extract={k: x["rows"] for k, x in ex.items()}, increment=inc["rows"],
@@ -74,6 +75,7 @@ def run_elt(cfg: RunConfig) -> dict:
         stg["stg_payments"] = elt_steps.build_staging(cfg, "stg_payments")["dq_status"]
         dq = elt_steps.record_dq_results(cfg)
         marts = {m: elt_steps.build_mart(cfg, m)["rows"] for m in elt_steps.MARTS}
+        out["scd2"] = elt_steps.customer_scd2(cfg)
         rp = elt_steps.report(cfg)
         out.update(raw={r["table"] + ":" + r["file"]: (r["rows_loaded"], r["table_rows"]) for r in raw},
                    staging=stg, versions=o["versions"], merges=o["merges"], dq=dq, marts=marts, report=rp,

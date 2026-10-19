@@ -89,6 +89,14 @@ def prepare(exp: str) -> None:
         shifted = (ts - pd.Timedelta(days=30)).dt.strftime("%Y-%m-%d %H:%M:%S")
         df["order_ts"] = shifted.where(ts.notna(), df["order_ts"])   # unparseable values stay as they were
         df.to_csv(o, index=False)
+    elif exp == "exp11_scd2_day2":
+        # Next-day CRM export: three tier changes and one deactivation (bonus SCD Type 2 test).
+        c = read(d / "customers.csv")
+        changes = {"C00136": ("loyalty_tier", "Gold"), "C00236": ("loyalty_tier", "Gold"),
+                   "C00071": ("loyalty_tier", "Gold"), "C00001": ("is_active", "N")}
+        for cid, (col, val) in changes.items():
+            c.loc[c["customer_id"] == cid, col] = val
+        c.to_csv(d / "customers.csv", index=False)
     elif exp == "exp00_control":
         pass
     else:

@@ -248,3 +248,12 @@ def cleanup_work_dir(cfg: RunConfig) -> None:
     if cfg.run_work_dir.exists():
         shutil.rmtree(cfg.run_work_dir)
         log.info("[cleanup] removed %s", cfg.run_work_dir)
+
+
+def customer_scd2_step(cfg: RunConfig, transformed: dict) -> dict:
+    """Bonus: maintain the SCD Type 2 customer dimension (loyalty-tier history)."""
+    from .scd2 import load_customer_scd2
+    snap = pd.read_csv(transformed["dim_customer"]["work_file"], dtype=str, keep_default_na=False, na_values=[""])
+    snap = snap.astype(object).where(snap.notna(), None)
+    with connect(cfg.warehouse) as con:
+        return load_customer_scd2(con, snap, cfg.as_of, cfg.run_id)

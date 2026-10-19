@@ -121,6 +121,11 @@ def nammamart_elt_ashish_kamat():
         return elt_steps.build_mart(_cfg(cfg), name)
 
     @task
+    def dim_customer_scd2(cfg: dict) -> dict:
+        """Bonus: SCD Type 2 customer dimension (loyalty-tier history)."""
+        return elt_steps.customer_scd2(_cfg(cfg))
+
+    @task
     def report(cfg: dict) -> dict:
         return elt_steps.report(_cfg(cfg))
 
@@ -172,6 +177,8 @@ def nammamart_elt_ashish_kamat():
     marts["mart_payment_reconciliation"] >> marts["mart_payment_mode_revenue"]
     dq >> marts["mart_rejected_rows"]
     rp = report(cfg)
+    scd2 = dim_customer_scd2(cfg)
+    s_c >> scd2 >> rp
     [marts[m] for m in marts if m != "int_fact_orders"] >> rp
     rp >> run_audit()
 

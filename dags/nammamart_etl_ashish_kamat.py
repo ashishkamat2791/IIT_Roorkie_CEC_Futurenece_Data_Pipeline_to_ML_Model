@@ -127,6 +127,11 @@ def nammamart_etl_ashish_kamat():
         return etl_steps.load_step(_cfg(cfg), transformed)
 
     @task
+    def load_customer_scd2(cfg: dict, transformed: dict, loaded: dict) -> dict:
+        """Bonus: SCD Type 2 customer dimension (loyalty-tier history)."""
+        return etl_steps.customer_scd2_step(_cfg(cfg), transformed)
+
+    @task
     def reconcile_payments(cfg: dict, payments: dict, orders: dict, loaded: dict) -> dict:
         return etl_steps.reconcile_step(_cfg(cfg), payments, orders)
 
@@ -169,6 +174,7 @@ def nammamart_etl_ashish_kamat():
     ld = load_warehouse(cfg, tr)
     rc = reconcile_payments(cfg, vp, vo, ld)
     rp = build_reports(cfg, rc)
+    load_customer_scd2(cfg, tr, ld) >> rp
     rp >> run_audit()
 
 
