@@ -1,0 +1,46 @@
+SET
+== DAG run
+       run_id       |  state  | run_type |          start_date           |           end_date            | seconds |                                                                                                    conf                                                                                                     
+--------------------+---------+----------+-------------------------------+-------------------------------+---------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ exp05_bad_rows_elt | success | manual   | 2026-10-18 17:28:39.033521+00 | 2026-10-18 17:29:05.777203+00 |    26.7 | {"data_dir": "include/experiments/exp05_bad_rows/data", "quarantine_dir": "include/experiments/exp05_bad_rows/elt/quarantine", "warehouse_path": "include/experiments/exp05_bad_rows/elt/warehouse.duckdb"}
+(1 row)
+
+== Task instances (current try)
+           task_id           |  state  | try_number |   started    |    ended     | seconds 
+-----------------------------+---------+------------+--------------+--------------+---------
+ start_run                   | success |          1 | 17:28:39.106 | 17:28:39.873 |    0.77
+ extract_payments            | success |          1 | 17:28:40.237 | 17:28:41.446 |    1.21
+ extract_customers           | success |          1 | 17:28:40.241 | 17:28:41.583 |    1.34
+ extract_products            | success |          1 | 17:28:40.241 | 17:28:41.546 |    1.31
+ extract_order_increment     | success |          1 | 17:28:40.241 | 17:28:41.479 |    1.24
+ extract_orders              | success |          1 | 17:28:40.242 | 17:28:41.567 |    1.32
+ extract_stores              | success |          1 | 17:28:40.242 | 17:28:41.471 |    1.23
+ load_raw_orders             | success |          1 | 17:28:42.364 | 17:28:44.076 |    1.71
+ load_raw_payments           | success |          1 | 17:28:42.375 | 17:28:45.229 |    2.85
+ load_raw_products           | success |          1 | 17:28:42.376 | 17:28:47.599 |    5.22
+ load_raw_stores             | success |          1 | 17:28:42.394 | 17:28:44.710 |    2.32
+ load_raw_order_increment    | success |          1 | 17:28:42.399 | 17:28:43.870 |    1.47
+ load_raw_customers          | success |          1 | 17:28:42.404 | 17:28:45.823 |    3.42
+ stg_stores                  | success |          1 | 17:28:44.848 | 17:28:46.844 |    2.00
+ stg_customers               | success |          1 | 17:28:46.078 | 17:28:48.717 |    2.64
+ stg_products                | success |          1 | 17:28:48.421 | 17:28:49.513 |    1.09
+ stg_orders                  | success |          1 | 17:28:49.736 | 17:28:52.264 |    2.53
+ stg_payments                | success |          1 | 17:28:52.415 | 17:28:54.470 |    2.05
+ record_dq_results           | success |          1 | 17:28:54.776 | 17:28:55.926 |    1.15
+ mart_rejected_rows          | success |          1 | 17:28:56.069 | 17:28:58.582 |    2.51
+ int_fact_orders             | success |          1 | 17:28:56.071 | 17:28:57.367 |    1.30
+ mart_top_customers          | success |          1 | 17:28:58.361 | 17:29:00.717 |    2.36
+ mart_daily_store_kpis       | success |          1 | 17:28:58.363 | 17:29:03.469 |    5.11
+ mart_delivery_sla           | success |          1 | 17:28:58.367 | 17:29:01.980 |    3.61
+ mart_category_margin        | success |          1 | 17:28:58.371 | 17:28:59.782 |    1.41
+ mart_payment_reconciliation | success |          1 | 17:28:58.376 | 17:29:01.161 |    2.78
+ mart_payment_mode_revenue   | success |          1 | 17:29:01.400 | 17:29:02.558 |    1.16
+ report                      | success |          1 | 17:29:03.590 | 17:29:04.475 |    0.89
+ run_audit                   | success |          1 | 17:29:04.702 | 17:29:05.370 |    0.67
+(29 rows)
+
+== Earlier tries (task_instance_history)
+ task_id | try_number | state | started | ended 
+---------+------------+-------+---------+-------
+(0 rows)
+

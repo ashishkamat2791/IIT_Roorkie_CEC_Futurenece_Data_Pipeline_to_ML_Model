@@ -1,0 +1,3 @@
+run_id,source_row_num,store_id,store_name,zone,area,pincode,open_date,manager_name,capacity_orders_per_day,source_file,dq_status,failed_checks,failure_reason
+exp03_increment_etl,7,S07,NammaMart BTM Layout,,BTM Layout,560076,2024-06-12,S*** B***,500,stores.csv,FAILED_ATTRIBUTE,stores_zone_present,stores_zone_present: zone is blank
+exp03_increment_etl,12,S12,NammaMart Rajajinagar,West,Rajajinagar,560010,2025-01-22,R*** D***,0,stores.csv,FAILED_ATTRIBUTE,stores_capacity_positive,stores_capacity_positive: capacity_orders_per_day '0' <= 0

@@ -1,0 +1,37 @@
+SET
+== DAG run
+         run_id          | state  | run_type |          start_date           |          end_date           | seconds |                                                                                                            conf                                                                                                            
+-------------------------+--------+----------+-------------------------------+-----------------------------+---------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ exp06_schema_change_etl | failed | manual   | 2026-10-18 17:28:52.356982+00 | 2026-10-18 17:31:01.6676+00 |   129.3 | {"data_dir": "include/experiments/exp06_schema_change/data", "quarantine_dir": "include/experiments/exp06_schema_change/etl/quarantine", "warehouse_path": "include/experiments/exp06_schema_change/etl/warehouse.duckdb"}
+(1 row)
+
+== Task instances (current try)
+         task_id         |      state      | try_number |   started    |    ended     | seconds 
+-------------------------+-----------------+------------+--------------+--------------+---------
+ start_run               | success         |          1 | 17:28:52.415 | 17:28:53.430 |    1.02
+ extract_products        | success         |          1 | 17:28:53.596 | 17:28:55.358 |    1.76
+ extract_order_increment | success         |          1 | 17:28:53.598 | 17:28:55.168 |    1.57
+ extract_customers       | success         |          1 | 17:28:53.598 | 17:28:55.304 |    1.71
+ extract_payments        | success         |          1 | 17:28:53.598 | 17:28:55.334 |    1.74
+ extract_stores          | success         |          1 | 17:28:53.615 | 17:28:55.345 |    1.73
+ validate_products       | success         |          1 | 17:28:55.956 | 17:28:57.157 |    1.20
+ validate_stores         | success         |          1 | 17:28:55.957 | 17:28:57.265 |    1.31
+ validate_customers      | success         |          1 | 17:28:55.961 | 17:28:57.313 |    1.35
+ extract_orders          | failed          |          3 | 17:30:56.468 | 17:30:56.967 |    0.50
+ validate_orders         | upstream_failed |          0 | 17:30:57.560 | 17:30:57.560 |    0.00
+ quarantine_failed_rows  | upstream_failed |          0 | 17:30:58.634 | 17:30:58.634 |    0.00
+ reconcile_payments      | upstream_failed |          0 | 17:30:58.636 | 17:30:58.636 |    0.00
+ transform               | upstream_failed |          0 | 17:30:58.637 | 17:30:58.637 |    0.00
+ validate_payments       | upstream_failed |          0 | 17:30:58.638 | 17:30:58.638 |    0.00
+ build_reports           | upstream_failed |          0 | 17:30:59.040 | 17:30:59.040 |    0.00
+ load_warehouse          | upstream_failed |          0 | 17:30:59.041 | 17:30:59.041 |    0.00
+ run_audit               | failed          |          1 | 17:31:00.123 | 17:31:00.835 |    0.71
+(18 rows)
+
+== Earlier tries (task_instance_history)
+    task_id     | try_number | state  |   started    |    ended     
+----------------+------------+--------+--------------+--------------
+ extract_orders |          1 | failed | 17:28:53.587 | 17:28:54.944
+ extract_orders |          2 | failed | 17:29:55.085 | 17:29:55.547
+(2 rows)
+

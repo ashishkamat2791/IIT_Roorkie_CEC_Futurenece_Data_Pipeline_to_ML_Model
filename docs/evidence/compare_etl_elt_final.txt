@@ -1,0 +1,43 @@
+warehouse: /Users/aakamat/Desktop/Agentic-AI/IIT_Roorkie_CEC_Futurenece_Data_Pipeline_to_ML_Model/include/warehouse_ashish_kamat.duckdb
+
+MATCH  Q1 daily net revenue by zone and store: ETL rows=460 ELT rows=460
+MATCH  Q2 revenue and gross margin by category: ETL rows=7 ELT rows=7
+MATCH  Q3 delivery SLA per store: ETL rows=15 ELT rows=15
+MATCH  Q4a revenue by payment mode + unreconciled: ETL rows=5 ELT rows=5
+MATCH  Q4b reconciliation rows: ETL rows=344 ELT rows=344
+MATCH  Q5 top 10 customers: ETL rows=10 ELT rows=10
+MATCH  Q6 rejected rows by file and check (latest ETL run vs current ELT staging): ETL rows=32 ELT rows=32
+MATCH  Fact rows (order_id, status, net_revenue, gross_margin, within_15_min): ETL rows=2458 ELT rows=2458
+
+September ETL: delivered_orders=2076 net_revenue=1130769.10 gross_margin=265448.45 delivered_without_cost=57
+September ELT: delivered_orders=2076 net_revenue=1130769.10 gross_margin=265448.45 delivered_without_cost=57
+
+dq_results latest run per DAG: 97 (file, check) pairs, 26 with different counts
+    ('orders_2026-10-01_increment.csv', 'orders_amount_formula', 'Accuracy', 'Critical', None, 0, None, 160)
+    ('orders_2026-10-01_increment.csv', 'orders_cancelled_without_delivery', 'Consistency', 'Warning', None, 0, None, 0)
+    ('orders_2026-10-01_increment.csv', 'orders_customer_fk', 'Consistency', 'Critical', None, 0, None, 160)
+    ('orders_2026-10-01_increment.csv', 'orders_customer_id_not_null', 'Completeness', 'Critical', None, 0, None, 160)
+    ('orders_2026-10-01_increment.csv', 'orders_delivered_has_delivery_minutes', 'Completeness', 'Critical', None, 0, None, 150)
+    ('orders_2026-10-01_increment.csv', 'orders_delivery_minutes_lt_120', 'Accuracy', 'Critical', None, 0, None, 160)
+    ('orders_2026-10-01_increment.csv', 'orders_delivery_minutes_normal_range', 'Accuracy', 'Warning', None, 0, None, 160)
+    ('orders_2026-10-01_increment.csv', 'orders_discount_pct_range', 'Validity', 'Critical', None, 0, None, 160)
+    ('orders_2026-10-01_increment.csv', 'orders_freshness', 'Timeliness', 'Warning', None, 0, None, 1)
+    ('orders_2026-10-01_increment.csv', 'orders_numeric_fields_valid', 'Validity', 'Critical', None, 0, None, 160)
+    ('orders_2026-10-01_increment.csv', 'orders_order_id_not_null', 'Completeness', 'Critical', None, 0, None, 160)
+    ('orders_2026-10-01_increment.csv', 'orders_order_id_unique', 'Uniqueness', 'Critical', None, 0, None, 160)
+    ('orders_2026-10-01_increment.csv', 'orders_order_ts_not_future', 'Timeliness', 'Critical', None, 0, None, 160)
+    ('orders_2026-10-01_increment.csv', 'orders_order_ts_valid', 'Validity', 'Critical', None, 0, None, 160)
+    ('orders_2026-10-01_increment.csv', 'orders_payment_mode_allowed', 'Validity', 'Critical', None, 0, None, 160)
+    ('orders_2026-10-01_increment.csv', 'orders_payment_mode_casing', 'Consistency', 'Warning', None, 0, None, 160)
+    ('orders_2026-10-01_increment.csv', 'orders_product_fk', 'Consistency', 'Critical', None, 0, None, 160)
+    ('orders_2026-10-01_increment.csv', 'orders_quantity_positive', 'Accuracy', 'Critical', None, 0, None, 160)
+    ('orders_2026-10-01_increment.csv', 'orders_status_allowed', 'Validity', 'Critical', None, 0, None, 160)
+    ('orders_2026-10-01_increment.csv', 'orders_status_casing', 'Consistency', 'Warning', None, 0, None, 160)
+    ('orders_2026-10-01_increment.csv', 'orders_store_daily_capacity', 'Consistency', 'Warning', None, 0, None, 22)
+    ('orders_2026-10-01_increment.csv', 'orders_store_fk', 'Consistency', 'Critical', None, 0, None, 160)
+    ('orders_2026-10-01_increment.csv', 'orders_store_price_distribution', 'Accuracy', 'Warning', None, 0, None, 15)
+    ('orders_2026-10-01_increment.csv', 'orders_unit_price_gross_outlier', 'Accuracy', 'Critical', None, 0, None, 160)
+    ('orders_2026-10-01_increment.csv', 'orders_unit_price_positive', 'Accuracy', 'Critical', None, 0, None, 160)
+    ('orders_2026-10-01_increment.csv', 'orders_unit_price_vs_mrp', 'Accuracy', 'Warning', None, 0, None, 160)
+
+RESULT: ETL and ELT business answers MATCH

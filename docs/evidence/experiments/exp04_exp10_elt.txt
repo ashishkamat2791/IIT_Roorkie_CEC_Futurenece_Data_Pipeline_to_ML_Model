@@ -1,0 +1,59 @@
+== exp04_missing_file / elt (include/experiments/exp04_missing_file/elt/warehouse.duckdb)
+                run_id  status  rows_extracted  rows_loaded  rows_quarantined failed_tasks warnings        duration
+exp04_missing_file_elt SUCCESS            5212         5212               167                       0 days 00:05:14
+
+-- dq_results that did not pass
+  source_file                            check_name    dimension severity  rows_checked  rows_failed status details
+customers.csv          customers_customer_id_unique   Uniqueness Critical           405            5   FAIL        
+customers.csv           customers_signup_not_future   Timeliness Critical           405            3   FAIL        
+customers.csv                customers_city_present Completeness  Warning           405            6   WARN        
+customers.csv                customers_email_format     Validity  Warning           405           12   WARN        
+customers.csv         customers_loyalty_tier_casing  Consistency  Warning           405            8   WARN        
+customers.csv                customers_phone_format     Validity  Warning           405            7   WARN        
+customers.csv              customers_pincode_format     Validity  Warning           405            5   WARN        
+   orders.csv                 orders_amount_formula     Accuracy Critical          2412           18   FAIL        
+   orders.csv           orders_customer_id_not_null Completeness Critical          2412           18   FAIL        
+   orders.csv orders_delivered_has_delivery_minutes Completeness Critical          2184            8   FAIL        
+   orders.csv        orders_delivery_minutes_lt_120     Accuracy Critical          2412            6   FAIL        
+   orders.csv             orders_discount_pct_range     Validity Critical          2412            3   FAIL        
+   orders.csv                orders_order_id_unique   Uniqueness Critical          2412           12   FAIL        
+   orders.csv            orders_order_ts_not_future   Timeliness Critical          2412            7   FAIL        
+   orders.csv                 orders_order_ts_valid     Validity Critical          2412            6   FAIL        
+   orders.csv           orders_payment_mode_allowed     Validity Critical          2412            2   FAIL        
+   orders.csv                     orders_product_fk  Consistency Critical          2412            9   FAIL        
+   orders.csv              orders_quantity_positive     Accuracy Critical          2412           10   FAIL        
+   orders.csv                 orders_status_allowed     Validity Critical          2412            3   FAIL        
+   orders.csv                       orders_store_fk  Consistency Critical          2412            5   FAIL        
+   orders.csv            orders_payment_mode_casing  Consistency  Warning          2412            8   WARN        
+   orders.csv                  orders_status_casing  Consistency  Warning          2412            2   WARN        
+ payments.csv                     payments_order_fk  Consistency Critical          2228            8   FAIL        
+ payments.csv            payments_payment_id_unique   Uniqueness Critical          2228            4   FAIL        
+ payments.csv         payments_payment_mode_allowed     Validity Critical          2228            2   FAIL        
+ payments.csv        payments_payment_ts_not_future   Timeliness Critical          2228            7   FAIL        
+ payments.csv payments_success_amount_matches_order  Consistency Critical          2108           14   FAIL        
+ payments.csv      payments_success_amount_positive     Accuracy Critical          2116           10   FAIL        
+ payments.csv          payments_payment_mode_casing  Consistency  Warning          2228            8   WARN        
+ products.csv             products_category_present Completeness Critical           152            3   FAIL        
+ products.csv                  products_cost_le_mrp     Accuracy Critical           151            4   FAIL        
+ products.csv                 products_mrp_positive     Accuracy Critical           152            1   FAIL        
+ products.csv            products_product_id_unique   Uniqueness Critical           152            2   FAIL        
+   stores.csv              stores_capacity_positive     Accuracy Critical            15            1   FAIL        
+   stores.csv                   stores_zone_present Completeness Critical            15            1   FAIL        
+
+-- int_fact_orders: rows / September delivered revenue by store S05 vs all
+ fact_rows  net_revenue  s05_revenue  s05_orders     latest_order_ts
+      2308    1134962.8     77794.45         140 2026-09-30 23:46:37
+
+-- mart_payment_reconciliation by reason
+                    reason  n   amount
+           AMOUNT_MISMATCH 13   760.00
+  DUPLICATE_PAYMENT_RECORD  4  1330.50
+           MISSING_PAYMENT 27 16664.35
+            ORPHAN_PAYMENT  8  4580.57
+            PAYMENT_FAILED 42 25722.25
+PAYMENT_FOR_REJECTED_ORDER 90 84219.88
+
+-- stg_orders_versions rows ORD9000xx
+Empty DataFrame
+Columns: [order_id, dq_status, failure_reason]
+Index: []

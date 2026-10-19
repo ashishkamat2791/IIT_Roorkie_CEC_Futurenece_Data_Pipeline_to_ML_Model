@@ -1,0 +1,8 @@
+category,delivered_orders,units,net_revenue,cost_amount,gross_margin,margin_pct,orders_without_cost
+Staples,336,624.0,287601.45,201440.16,67143.14,25.0,34
+Personal Care,347,678.0,215345.3,166759.52,47326.83,22.11,14
+Household,362,664.0,211727.05,157374.54,54352.51,25.67,0
+Dairy & Bakery,405,760.0,179568.95,131935.95,47633.0,26.53,0
+Snacks & Beverages,340,682.0,174700.6,133329.82,41370.78,23.68,0
+Fruits & Vegetables,392,751.0,99566.2,71398.82,22205.38,23.72,18
+Unknown,44,88.0,41911.75,36968.36,4943.39,11.79,0

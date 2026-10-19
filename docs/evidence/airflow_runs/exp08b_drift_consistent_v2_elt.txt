@@ -1,0 +1,46 @@
+SET
+== DAG run
+             run_id             |  state  | run_type |          start_date          |           end_date            | seconds |                                                                                                                      conf                                                                                                                       
+--------------------------------+---------+----------+------------------------------+-------------------------------+---------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ exp08b_drift_consistent_v2_elt | success | manual   | 2026-10-18 17:40:36.51432+00 | 2026-10-18 17:41:02.352738+00 |    25.8 | {"data_dir": "include/experiments/exp08b_drift_consistent_v2/data", "quarantine_dir": "include/experiments/exp08b_drift_consistent_v2/elt/quarantine", "warehouse_path": "include/experiments/exp08b_drift_consistent_v2/elt/warehouse.duckdb"}
+(1 row)
+
+== Task instances (current try)
+           task_id           |  state  | try_number |   started    |    ended     | seconds 
+-----------------------------+---------+------------+--------------+--------------+---------
+ start_run                   | success |          1 | 17:40:36.577 | 17:40:37.488 |    0.91
+ extract_order_increment     | success |          1 | 17:40:37.743 | 17:40:38.945 |    1.20
+ extract_orders              | success |          1 | 17:40:37.744 | 17:40:39.113 |    1.37
+ extract_customers           | success |          1 | 17:40:37.744 | 17:40:39.148 |    1.40
+ extract_payments            | success |          1 | 17:40:37.744 | 17:40:39.074 |    1.33
+ extract_stores              | success |          1 | 17:40:37.745 | 17:40:39.200 |    1.46
+ extract_products            | success |          1 | 17:40:37.766 | 17:40:39.191 |    1.42
+ load_raw_stores             | success |          1 | 17:40:39.997 | 17:40:43.163 |    3.17
+ load_raw_payments           | success |          1 | 17:40:39.999 | 17:40:42.972 |    2.97
+ load_raw_customers          | success |          1 | 17:40:40.000 | 17:40:41.295 |    1.30
+ load_raw_products           | success |          1 | 17:40:40.002 | 17:40:42.045 |    2.04
+ load_raw_orders             | success |          1 | 17:40:40.027 | 17:40:44.727 |    4.70
+ load_raw_order_increment    | success |          1 | 17:40:40.039 | 17:40:41.210 |    1.17
+ stg_customers               | success |          1 | 17:40:42.247 | 17:40:43.528 |    1.28
+ stg_products                | success |          1 | 17:40:42.248 | 17:40:45.903 |    3.66
+ stg_stores                  | success |          1 | 17:40:43.391 | 17:40:44.410 |    1.02
+ stg_orders                  | success |          1 | 17:40:46.594 | 17:40:48.671 |    2.08
+ stg_payments                | success |          1 | 17:40:49.119 | 17:40:50.629 |    1.51
+ record_dq_results           | success |          1 | 17:40:51.363 | 17:40:52.285 |    0.92
+ int_fact_orders             | success |          1 | 17:40:52.539 | 17:40:54.432 |    1.89
+ mart_rejected_rows          | success |          1 | 17:40:52.540 | 17:40:53.605 |    1.07
+ mart_category_margin        | success |          1 | 17:40:54.702 | 17:40:56.057 |    1.36
+ mart_daily_store_kpis       | success |          1 | 17:40:54.702 | 17:40:58.172 |    3.47
+ mart_delivery_sla           | success |          1 | 17:40:54.704 | 17:40:57.305 |    2.60
+ mart_top_customers          | success |          1 | 17:40:54.704 | 17:40:59.004 |    4.30
+ mart_payment_reconciliation | success |          1 | 17:40:54.705 | 17:40:58.503 |    3.80
+ mart_payment_mode_revenue   | success |          1 | 17:40:58.964 | 17:40:59.923 |    0.96
+ report                      | success |          1 | 17:41:00.084 | 17:41:01.084 |    1.00
+ run_audit                   | success |          1 | 17:41:01.270 | 17:41:02.021 |    0.75
+(29 rows)
+
+== Earlier tries (task_instance_history)
+ task_id | try_number | state | started | ended 
+---------+------------+-------+---------+-------
+(0 rows)
+

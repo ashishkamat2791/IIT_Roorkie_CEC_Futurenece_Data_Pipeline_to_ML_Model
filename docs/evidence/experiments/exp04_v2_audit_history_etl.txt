@@ -1,0 +1,5 @@
+               recorded_at  status     failed_tasks                                                                                                                upstream_failed_tasks  rows_extracted  rows_quarantined
+2026-10-18 17:42:42.157910  FAILED extract_products build_reports,load_warehouse,quarantine_failed_rows,reconcile_payments,transform,validate_orders,validate_payments,validate_products            5060              <NA>
+2026-10-18 17:44:10.081469 SUCCESS                                                                                                                                                                  5212               167
+ status failed_tasks upstream_failed_tasks
+SUCCESS                                   

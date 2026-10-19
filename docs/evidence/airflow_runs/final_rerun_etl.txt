@@ -1,0 +1,35 @@
+SET
+== DAG run
+     run_id      |  state  | run_type |          start_date           |           end_date           | seconds | conf 
+-----------------+---------+----------+-------------------------------+------------------------------+---------+------
+ final_rerun_etl | success | manual   | 2026-10-18 17:45:04.958171+00 | 2026-10-18 17:45:37.52239+00 |    32.6 | {}
+(1 row)
+
+== Task instances (current try)
+         task_id         |  state  | try_number |   started    |    ended     | seconds 
+-------------------------+---------+------------+--------------+--------------+---------
+ start_run               | success |          1 | 17:45:05.023 | 17:45:06.448 |    1.42
+ extract_orders          | success |          1 | 17:45:07.110 | 17:45:08.941 |    1.83
+ extract_order_increment | success |          1 | 17:45:07.111 | 17:45:08.887 |    1.78
+ extract_customers       | success |          1 | 17:45:07.115 | 17:45:09.038 |    1.92
+ extract_payments        | success |          1 | 17:45:07.115 | 17:45:09.031 |    1.92
+ extract_products        | success |          1 | 17:45:07.116 | 17:45:08.924 |    1.81
+ extract_stores          | success |          1 | 17:45:07.144 | 17:45:09.014 |    1.87
+ validate_stores         | success |          1 | 17:45:09.591 | 17:45:10.635 |    1.04
+ validate_customers      | success |          1 | 17:45:09.592 | 17:45:10.654 |    1.06
+ validate_products       | success |          1 | 17:45:09.592 | 17:45:10.679 |    1.09
+ validate_orders         | success |          1 | 17:45:10.805 | 17:45:13.123 |    2.32
+ validate_payments       | success |          1 | 17:45:13.252 | 17:45:15.229 |    1.98
+ quarantine_failed_rows  | success |          1 | 17:45:15.669 | 17:45:18.024 |    2.35
+ transform               | success |          1 | 17:45:18.492 | 17:45:22.243 |    3.75
+ load_warehouse          | success |          1 | 17:45:22.846 | 17:45:28.204 |    5.36
+ reconcile_payments      | success |          1 | 17:45:28.443 | 17:45:32.088 |    3.65
+ build_reports           | success |          1 | 17:45:32.833 | 17:45:34.465 |    1.63
+ run_audit               | success |          1 | 17:45:35.338 | 17:45:36.569 |    1.23
+(18 rows)
+
+== Earlier tries (task_instance_history)
+ task_id | try_number | state | started | ended 
+---------+------------+-------+---------+-------
+(0 rows)
+

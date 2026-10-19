@@ -1,0 +1,5 @@
+               recorded_at  status     failed_tasks                                                                                                                                                                                                                                    upstream_failed_tasks  rows_extracted  rows_quarantined
+2026-10-18 17:43:15.578946  FAILED extract_products int_fact_orders,load_raw_products,mart_category_margin,mart_daily_store_kpis,mart_delivery_sla,mart_payment_mode_revenue,mart_payment_reconciliation,mart_rejected_rows,mart_top_customers,record_dq_results,report,stg_orders,stg_payments,stg_products            5060              <NA>
+2026-10-18 17:44:13.050218 SUCCESS                                                                                                                                                                                                                                                                                      5212               167
+ status failed_tasks upstream_failed_tasks
+SUCCESS                                   

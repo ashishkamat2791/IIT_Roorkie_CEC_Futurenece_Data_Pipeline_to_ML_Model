@@ -1,0 +1,98 @@
+=== E3 LINEAGE: mart_daily_store_kpis S01 on 2026-09-15
+
+-- Mart value
+SELECT order_date, zone, store_id, delivered_orders, net_revenue FROM mart_daily_store_kpis WHERE store_id = 'S01' AND order_date = DATE '2026-09-15'
+
+order_date  zone store_id  delivered_orders  net_revenue
+2026-09-15 North      S01                 6      4583.05
+
+-- ELT: contributing rows -> staging version -> raw row
+SELECT f.order_id, f.net_revenue, f.stg_row_key, r._source_file, r._row_num, r._run_id, r.order_amount AS raw_order_amount, r.order_status AS raw_status
+FROM int_fact_orders f
+JOIN raw_orders r ON r._source_file = f.source_file AND r._row_num = f.source_row_num AND r._run_id = f._raw_run_id
+WHERE f.store_id = 'S01' AND f.order_date = DATE '2026-09-15' AND f.order_status = 'DELIVERED' ORDER BY 1
+
+ order_id  net_revenue     stg_row_key _source_file  _row_num         _run_id raw_order_amount raw_status
+ORD001105       360.00  orders.csv:390   orders.csv       390 final_rerun_elt            360.0  DELIVERED
+ORD001127       597.55   orders.csv:88   orders.csv        88 final_rerun_elt           597.55  DELIVERED
+ORD001130       447.30  orders.csv:750   orders.csv       750 final_rerun_elt            447.3  DELIVERED
+ORD001132       498.60 orders.csv:2191   orders.csv      2191 final_rerun_elt            498.6  DELIVERED
+ORD001133      2325.60 orders.csv:1723   orders.csv      1723 final_rerun_elt           2325.6  DELIVERED
+ORD001144       354.00 orders.csv:1498   orders.csv      1498 final_rerun_elt            354.0  DELIVERED
+
+-- ETL: contributing fact rows with source_file + source_row_num
+SELECT order_id, net_revenue, source_file, source_row_num, loaded_run_id FROM etl_fact_orders
+WHERE store_id = 'S01' AND order_date = DATE '2026-09-15' AND order_status = 'DELIVERED' ORDER BY 1
+
+ order_id  net_revenue source_file  source_row_num                        loaded_run_id
+ORD001105       360.00  orders.csv             390 scheduled__2026-10-17T03:30:00+00:00
+ORD001127       597.55  orders.csv              88 scheduled__2026-10-17T03:30:00+00:00
+ORD001130       447.30  orders.csv             750 scheduled__2026-10-17T03:30:00+00:00
+ORD001132       498.60  orders.csv            2191 scheduled__2026-10-17T03:30:00+00:00
+ORD001133      2325.60  orders.csv            1723 scheduled__2026-10-17T03:30:00+00:00
+ORD001144       354.00  orders.csv            1498 scheduled__2026-10-17T03:30:00+00:00
+
+=== E8 AUDIT: rejected order ORD000462
+
+-- ELT raw: exactly as received (every load kept)
+SELECT * FROM raw_orders WHERE order_id = 'ORD000462' ORDER BY _loaded_at
+
+ order_id            order_ts customer_id store_id product_id quantity unit_price discount_pct order_amount payment_mode order_status channel delivery_minutes  _row_num _source_file          _loaded_at                              _run_id                        _file_md5
+ORD000462 2026-09-07 09:54:28      C00303      S04      P0050       -3      449.0            5     -1279.65         Card    DELIVERED     App               29      1020   orders.csv 2026-10-18 17:21:09 scheduled__2026-10-17T03:30:00+00:00 12bc39edb98a87c16d38c3f0f9f67af3
+ORD000462 2026-09-07 09:54:28      C00303      S04      P0050       -3      449.0            5     -1279.65         Card    DELIVERED     App               29      1020   orders.csv 2026-10-18 17:24:25                      exp02_rerun_elt 12bc39edb98a87c16d38c3f0f9f67af3
+ORD000462 2026-09-07 09:54:28      C00303      S04      P0050       -3      449.0            5     -1279.65         Card    DELIVERED     App               29      1020   orders.csv 2026-10-18 17:25:57                  exp03_increment_elt 12bc39edb98a87c16d38c3f0f9f67af3
+ORD000462 2026-09-07 09:54:28      C00303      S04      P0050       -3      449.0            5     -1279.65         Card    DELIVERED     App               29      1020   orders.csv 2026-10-18 17:45:20                      final_rerun_elt 12bc39edb98a87c16d38c3f0f9f67af3
+
+-- ELT staging: rule broken
+SELECT order_id, dq_status, failed_checks, failure_reason, stg_row_key FROM stg_orders WHERE order_id = 'ORD000462'
+
+ order_id dq_status            failed_checks                             failure_reason     stg_row_key
+ORD000462    FAILED orders_quantity_positive orders_quantity_positive: quantity -3 <= 0 orders.csv:1020
+
+-- Not in either finance table
+SELECT (SELECT count(*) FROM etl_fact_orders WHERE order_id='ORD000462') AS in_etl_fact, (SELECT count(*) FROM int_fact_orders WHERE order_id='ORD000462') AS in_elt_fact
+
+ in_etl_fact  in_elt_fact
+           0            0
+
+-- CFO revenue total excludes it (sum over fact = sum over Q1 report)
+SELECT (SELECT sum(net_revenue) FROM etl_fact_orders WHERE order_status='DELIVERED') AS etl_fact_total, (SELECT sum(net_revenue) FROM etl_daily_zone_revenue) AS etl_report_total, (SELECT sum(net_revenue) FROM mart_daily_store_kpis) AS elt_mart_total
+
+ etl_fact_total  etl_report_total  elt_mart_total
+      1210421.3         1210421.3       1210421.3
+
+-- Its payment is surfaced in reconciliation instead
+SELECT order_id, payment_ids, payment_status, actual_amount, reason FROM etl_payment_reconciliation WHERE order_id = 'ORD000462'
+
+ order_id payment_ids payment_status  actual_amount                     reason
+ORD000462  PAY0000944        SUCCESS       -1279.65 PAYMENT_FOR_REJECTED_ORDER
+
+=== E9 CHANGE HISTORY: September revenue as-originally-reported vs restated
+
+-- Restated (current state) vs as-originally-reported (versions from orders.csv only)
+WITH original AS (
+  SELECT sum(CASE WHEN order_status = 'DELIVERED' THEN order_amount ELSE 0 END) AS rev, count(*) FILTER (WHERE order_status='DELIVERED') AS n
+  FROM stg_orders_versions WHERE _source_file = 'orders.csv' AND dq_status IN ('PASSED','WARNING') AND order_ts < TIMESTAMP '2026-10-01'
+), restated AS (
+  SELECT sum(net_revenue) AS rev, count(*) FILTER (WHERE order_status='DELIVERED') AS n FROM int_fact_orders WHERE order_date < DATE '2026-10-01'
+)
+SELECT o.n AS original_delivered, o.rev AS original_sept_revenue, r.n AS restated_delivered, r.rev AS restated_sept_revenue, o.rev - r.rev AS returned_value
+FROM original o, restated r
+
+ original_delivered  original_sept_revenue  restated_delivered  restated_sept_revenue  returned_value
+               2086              1134962.8                2076              1130769.1          4193.7
+
+-- The corrected orders and when the change arrived
+SELECT order_id, order_date, order_amount, previous_status, order_status, previous_stg_row_key, stg_row_key, last_merge_run_id FROM stg_orders WHERE previous_status IS NOT NULL ORDER BY order_id
+
+ order_id order_date  order_amount previous_status order_status previous_stg_row_key                        stg_row_key last_merge_run_id
+ORD000017 2026-09-01          16.0       DELIVERED     RETURNED      orders.csv:1256  orders_2026-10-01_increment.csv:1   final_rerun_elt
+ORD000271 2026-09-04         445.0       DELIVERED     RETURNED      orders.csv:1230  orders_2026-10-01_increment.csv:2   final_rerun_elt
+ORD000332 2026-09-05          67.0       DELIVERED     RETURNED       orders.csv:466  orders_2026-10-01_increment.csv:3   final_rerun_elt
+ORD000337 2026-09-05        1748.0       DELIVERED     RETURNED       orders.csv:241  orders_2026-10-01_increment.csv:4   final_rerun_elt
+ORD000584 2026-09-08         102.6       DELIVERED     RETURNED      orders.csv:2096  orders_2026-10-01_increment.csv:5   final_rerun_elt
+ORD000708 2026-09-10         416.0       DELIVERED     RETURNED      orders.csv:1985  orders_2026-10-01_increment.csv:6   final_rerun_elt
+ORD000822 2026-09-11         531.0       DELIVERED     RETURNED      orders.csv:1575  orders_2026-10-01_increment.csv:7   final_rerun_elt
+ORD001025 2026-09-14         150.0       DELIVERED     RETURNED       orders.csv:735  orders_2026-10-01_increment.csv:8   final_rerun_elt
+ORD001067 2026-09-14         532.8       DELIVERED     RETURNED        orders.csv:13  orders_2026-10-01_increment.csv:9   final_rerun_elt
+ORD001990 2026-09-25         185.3       DELIVERED     RETURNED      orders.csv:1061 orders_2026-10-01_increment.csv:10   final_rerun_elt

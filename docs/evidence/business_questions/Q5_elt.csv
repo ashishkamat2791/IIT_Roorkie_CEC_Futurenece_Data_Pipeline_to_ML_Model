@@ -1,0 +1,11 @@
+spend_rank,customer_id,full_name_masked,email_masked,phone_masked,loyalty_tier,delivered_orders,net_revenue
+1,C00136,S*** B***,sa***@example.com,96******88,Bronze,9,8738.1
+2,C00115,S*** K***,sa***@example.com,96******85,Bronze,8,8037.7
+3,C00283,N*** R***,ni***@example.com,91******43,Bronze,8,7934.6
+4,C00236,S*** N***,sn***@example.com,90******01,Platinum,12,7831.8
+5,C00310,K*** P***,,91******35,Bronze,8,7258.95
+6,C00265,V*** H***,vi***@example.com,91******69,Gold,8,7151.3
+7,C00071,M*** P***,ma***@example.com,91******42,Silver,11,6933.3
+8,C00338,B*** I***,bh***@example.com,94******05,Silver,9,6848.55
+9,C00357,A*** N***,ar***@example.com,,Bronze,11,6637.9
+10,C00209,K*** P***,ka***@example.com,98******97,Platinum,8,6519.4

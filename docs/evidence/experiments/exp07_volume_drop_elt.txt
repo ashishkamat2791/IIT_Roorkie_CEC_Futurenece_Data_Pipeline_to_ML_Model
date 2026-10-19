@@ -1,0 +1,44 @@
+== exp07_volume_drop / elt (include/experiments/exp07_volume_drop/elt/warehouse.duckdb)
+               run_id                status  rows_extracted  rows_loaded  rows_quarantined failed_tasks                                                                                         warnings        duration
+exp07_volume_drop_elt SUCCESS_WITH_WARNINGS            2850         2850              2204              orders_volume_vs_baseline: rows=50 baseline=2412.0 (documented default) drop=97.9% threshold=90% 0 days 00:00:29
+
+-- dq_results that did not pass
+  source_file                            check_name    dimension severity  rows_checked  rows_failed status                                                               details
+customers.csv          customers_customer_id_unique   Uniqueness Critical           405            5   FAIL                                                                      
+customers.csv           customers_signup_not_future   Timeliness Critical           405            3   FAIL                                                                      
+customers.csv                customers_city_present Completeness  Warning           405            6   WARN                                                                      
+customers.csv                customers_email_format     Validity  Warning           405           12   WARN                                                                      
+customers.csv         customers_loyalty_tier_casing  Consistency  Warning           405            8   WARN                                                                      
+customers.csv                customers_phone_format     Validity  Warning           405            7   WARN                                                                      
+customers.csv              customers_pincode_format     Validity  Warning           405            5   WARN                                                                      
+   orders.csv           orders_customer_id_not_null Completeness Critical            50            1   FAIL                                                                      
+   orders.csv           orders_payment_mode_allowed     Validity Critical            50            1   FAIL                                                                      
+   orders.csv             orders_volume_vs_baseline Completeness  Warning            50            1   WARN rows=50 baseline=2412.0 (documented default) drop=97.9% threshold=90%
+ payments.csv                     payments_order_fk  Consistency Critical          2228         2181   FAIL                                                                      
+ payments.csv            payments_payment_id_unique   Uniqueness Critical          2228            4   FAIL                                                                      
+ payments.csv         payments_payment_mode_allowed     Validity Critical          2228            2   FAIL                                                                      
+ payments.csv        payments_payment_ts_not_future   Timeliness Critical          2228            7   FAIL                                                                      
+ payments.csv payments_success_amount_matches_order  Consistency Critical            45            1   FAIL                                                                      
+ payments.csv      payments_success_amount_positive     Accuracy Critical          2116           10   FAIL                                                                      
+ payments.csv          payments_payment_mode_casing  Consistency  Warning          2228            8   WARN                                                                      
+ products.csv             products_category_present Completeness Critical           152            3   FAIL                                                                      
+ products.csv                  products_cost_le_mrp     Accuracy Critical           151            4   FAIL                                                                      
+ products.csv                 products_mrp_positive     Accuracy Critical           152            1   FAIL                                                                      
+ products.csv            products_product_id_unique   Uniqueness Critical           152            2   FAIL                                                                      
+   stores.csv              stores_capacity_positive     Accuracy Critical            15            1   FAIL                                                                      
+   stores.csv                   stores_zone_present Completeness Critical            15            1   FAIL                                                                      
+
+-- int_fact_orders: rows / September delivered revenue by store S05 vs all
+ fact_rows  net_revenue  s05_revenue  s05_orders     latest_order_ts
+        48      23636.4       2058.3           2 2026-09-30 23:38:04
+
+-- mart_payment_reconciliation by reason
+                    reason    n     amount
+  DUPLICATE_PAYMENT_RECORD    4    1330.50
+            ORPHAN_PAYMENT 2177 1156489.35
+PAYMENT_FOR_REJECTED_ORDER    2     577.00
+
+-- stg_orders_versions rows ORD9000xx
+Empty DataFrame
+Columns: [order_id, dq_status, failure_reason]
+Index: []

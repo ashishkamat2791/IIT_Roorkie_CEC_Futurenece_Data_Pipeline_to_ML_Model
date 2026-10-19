@@ -1,0 +1,35 @@
+SET
+== DAG run
+                run_id                |  state  | run_type  |          start_date           |           end_date            | seconds | conf 
+--------------------------------------+---------+-----------+-------------------------------+-------------------------------+---------+------
+ scheduled__2026-10-17T03:30:00+00:00 | success | scheduled | 2026-10-18 17:21:02.147313+00 | 2026-10-18 17:21:31.704473+00 |    29.6 | {}
+(1 row)
+
+== Task instances (current try)
+         task_id         |  state  | try_number |   started    |    ended     | seconds 
+-------------------------+---------+------------+--------------+--------------+---------
+ start_run               | success |          1 | 17:21:02.255 | 17:21:06.344 |    4.09
+ extract_orders          | success |          1 | 17:21:06.910 | 17:21:09.072 |    2.16
+ extract_order_increment | success |          1 | 17:21:06.926 | 17:21:08.592 |    1.67
+ extract_payments        | success |          1 | 17:21:07.005 | 17:21:09.087 |    2.08
+ extract_stores          | success |          1 | 17:21:07.078 | 17:21:09.275 |    2.20
+ extract_products        | success |          1 | 17:21:07.085 | 17:21:09.271 |    2.19
+ extract_customers       | success |          1 | 17:21:07.087 | 17:21:09.157 |    2.07
+ validate_stores         | success |          1 | 17:21:09.610 | 17:21:11.183 |    1.57
+ validate_products       | success |          1 | 17:21:09.622 | 17:21:11.189 |    1.57
+ validate_customers      | success |          1 | 17:21:09.640 | 17:21:11.185 |    1.55
+ validate_orders         | success |          1 | 17:21:11.962 | 17:21:13.264 |    1.30
+ validate_payments       | success |          1 | 17:21:14.328 | 17:21:15.039 |    0.71
+ quarantine_failed_rows  | success |          1 | 17:21:15.468 | 17:21:18.218 |    2.75
+ transform               | success |          1 | 17:21:18.320 | 17:21:21.218 |    2.90
+ load_warehouse          | success |          1 | 17:21:21.598 | 17:21:24.629 |    3.03
+ reconcile_payments      | success |          1 | 17:21:25.190 | 17:21:26.958 |    1.77
+ build_reports           | success |          1 | 17:21:27.490 | 17:21:28.728 |    1.24
+ run_audit               | success |          1 | 17:21:29.466 | 17:21:30.775 |    1.31
+(18 rows)
+
+== Earlier tries (task_instance_history)
+ task_id | try_number | state | started | ended 
+---------+------------+-------+---------+-------
+(0 rows)
+
