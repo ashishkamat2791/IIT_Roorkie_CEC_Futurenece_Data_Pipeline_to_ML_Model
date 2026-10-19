@@ -1,0 +1,261 @@
+file,row_key,column,problem,quality_dimension,proposed_rule,severity,evidence
+orders.csv,ORD001462,order_id,duplicate order_id (exact duplicate row),Uniqueness,"order_id unique; keep first exact copy, quarantine the extra copy",Critical,CONFIRMED
+orders.csv,ORD001441,order_id,duplicate order_id (exact duplicate row),Uniqueness,"order_id unique; keep first exact copy, quarantine the extra copy",Critical,CONFIRMED
+orders.csv,ORD001692,order_id,duplicate order_id (exact duplicate row),Uniqueness,"order_id unique; keep first exact copy, quarantine the extra copy",Critical,CONFIRMED
+orders.csv,ORD002129,order_id,duplicate order_id (exact duplicate row),Uniqueness,"order_id unique; keep first exact copy, quarantine the extra copy",Critical,CONFIRMED
+orders.csv,ORD001239,order_id,duplicate order_id (exact duplicate row),Uniqueness,"order_id unique; keep first exact copy, quarantine the extra copy",Critical,CONFIRMED
+orders.csv,ORD000783,order_id,duplicate order_id (exact duplicate row),Uniqueness,"order_id unique; keep first exact copy, quarantine the extra copy",Critical,CONFIRMED
+orders.csv,ORD000539,order_id,duplicate order_id (exact duplicate row),Uniqueness,"order_id unique; keep first exact copy, quarantine the extra copy",Critical,CONFIRMED
+orders.csv,ORD001434,order_id,duplicate order_id (exact duplicate row),Uniqueness,"order_id unique; keep first exact copy, quarantine the extra copy",Critical,CONFIRMED
+orders.csv,ORD001326,order_id,duplicate order_id (exact duplicate row),Uniqueness,"order_id unique; keep first exact copy, quarantine the extra copy",Critical,CONFIRMED
+orders.csv,ORD001549,order_id,duplicate order_id (exact duplicate row),Uniqueness,"order_id unique; keep first exact copy, quarantine the extra copy",Critical,CONFIRMED
+orders.csv,ORD001870,order_id,duplicate order_id (exact duplicate row),Uniqueness,"order_id unique; keep first exact copy, quarantine the extra copy",Critical,CONFIRMED
+orders.csv,ORD001110,order_id,duplicate order_id (exact duplicate row),Uniqueness,"order_id unique; keep first exact copy, quarantine the extra copy",Critical,CONFIRMED
+orders.csv,ORD000403,order_ts,unparseable timestamp 'N/A',Validity,order_ts must parse as YYYY-MM-DD HH:MM:SS,Critical,CONFIRMED
+orders.csv,ORD001610,order_ts,unparseable timestamp '2026-13-05 11:00:00',Validity,order_ts must parse as YYYY-MM-DD HH:MM:SS,Critical,CONFIRMED
+orders.csv,ORD000534,order_ts,unparseable timestamp '2026-13-05 11:00:00',Validity,order_ts must parse as YYYY-MM-DD HH:MM:SS,Critical,CONFIRMED
+orders.csv,ORD000362,order_ts,unparseable timestamp '',Validity,order_ts must parse as YYYY-MM-DD HH:MM:SS,Critical,CONFIRMED
+orders.csv,ORD002012,order_ts,unparseable timestamp '31/09/2026 10:00',Validity,order_ts must parse as YYYY-MM-DD HH:MM:SS,Critical,CONFIRMED
+orders.csv,ORD000946,order_ts,unparseable timestamp '31/09/2026 10:00',Validity,order_ts must parse as YYYY-MM-DD HH:MM:SS,Critical,CONFIRMED
+orders.csv,ORD002119,order_ts,future timestamp 2027-01-01 09:00:00 (batch cut-off 2026-10-01 09:00:00),Timeliness,order_ts <= batch cut-off,Critical,CONFIRMED
+orders.csv,ORD001693,order_ts,future timestamp 2026-10-21 10:15:00 (batch cut-off 2026-10-01 09:00:00),Timeliness,order_ts <= batch cut-off,Critical,CONFIRMED
+orders.csv,ORD001089,order_ts,future timestamp 2026-10-21 10:15:00 (batch cut-off 2026-10-01 09:00:00),Timeliness,order_ts <= batch cut-off,Critical,CONFIRMED
+orders.csv,ORD001121,order_ts,future timestamp 2026-11-02 18:40:00 (batch cut-off 2026-10-01 09:00:00),Timeliness,order_ts <= batch cut-off,Critical,CONFIRMED
+orders.csv,ORD001765,order_ts,future timestamp 2027-01-01 09:00:00 (batch cut-off 2026-10-01 09:00:00),Timeliness,order_ts <= batch cut-off,Critical,CONFIRMED
+orders.csv,ORD001965,order_ts,future timestamp 2026-11-02 18:40:00 (batch cut-off 2026-10-01 09:00:00),Timeliness,order_ts <= batch cut-off,Critical,CONFIRMED
+orders.csv,ORD001725,order_ts,future timestamp 2027-01-01 09:00:00 (batch cut-off 2026-10-01 09:00:00),Timeliness,order_ts <= batch cut-off,Critical,CONFIRMED
+orders.csv,ORD002255,customer_id,customer_id is blank,Completeness,customer_id not null,Critical,CONFIRMED
+orders.csv,ORD000701,customer_id,customer_id is blank,Completeness,customer_id not null,Critical,CONFIRMED
+orders.csv,ORD000997,customer_id,customer_id is blank,Completeness,customer_id not null,Critical,CONFIRMED
+orders.csv,ORD000580,customer_id,customer_id is blank,Completeness,customer_id not null,Critical,CONFIRMED
+orders.csv,ORD002019,customer_id,customer_id is blank,Completeness,customer_id not null,Critical,CONFIRMED
+orders.csv,ORD002262,customer_id,customer_id is blank,Completeness,customer_id not null,Critical,CONFIRMED
+orders.csv,ORD002149,customer_id,customer_id is blank,Completeness,customer_id not null,Critical,CONFIRMED
+orders.csv,ORD002367,customer_id,customer_id is blank,Completeness,customer_id not null,Critical,CONFIRMED
+orders.csv,ORD001332,customer_id,customer_id is blank,Completeness,customer_id not null,Critical,CONFIRMED
+orders.csv,ORD001918,customer_id,customer_id is blank,Completeness,customer_id not null,Critical,CONFIRMED
+orders.csv,ORD002156,customer_id,customer_id is blank,Completeness,customer_id not null,Critical,CONFIRMED
+orders.csv,ORD000583,customer_id,customer_id is blank,Completeness,customer_id not null,Critical,CONFIRMED
+orders.csv,ORD000790,customer_id,customer_id is blank,Completeness,customer_id not null,Critical,CONFIRMED
+orders.csv,ORD000764,customer_id,customer_id is blank,Completeness,customer_id not null,Critical,CONFIRMED
+orders.csv,ORD002219,customer_id,customer_id is blank,Completeness,customer_id not null,Critical,CONFIRMED
+orders.csv,ORD001532,customer_id,customer_id is blank,Completeness,customer_id not null,Critical,CONFIRMED
+orders.csv,ORD000022,customer_id,customer_id is blank,Completeness,customer_id not null,Critical,CONFIRMED
+orders.csv,ORD001373,customer_id,customer_id is blank,Completeness,customer_id not null,Critical,CONFIRMED
+orders.csv,ORD000986,product_id,product_id 'P9455' not found in master,Consistency,product_id must exist in product master,Critical,CONFIRMED
+orders.csv,ORD001058,product_id,product_id 'P9212' not found in master,Consistency,product_id must exist in product master,Critical,CONFIRMED
+orders.csv,ORD001685,product_id,product_id 'P9816' not found in master,Consistency,product_id must exist in product master,Critical,CONFIRMED
+orders.csv,ORD000070,product_id,product_id 'P9893' not found in master,Consistency,product_id must exist in product master,Critical,CONFIRMED
+orders.csv,ORD000789,product_id,product_id 'P9989' not found in master,Consistency,product_id must exist in product master,Critical,CONFIRMED
+orders.csv,ORD000596,product_id,product_id 'P9784' not found in master,Consistency,product_id must exist in product master,Critical,CONFIRMED
+orders.csv,ORD000134,product_id,product_id 'P9822' not found in master,Consistency,product_id must exist in product master,Critical,CONFIRMED
+orders.csv,ORD000965,product_id,product_id 'P9399' not found in master,Consistency,product_id must exist in product master,Critical,CONFIRMED
+orders.csv,ORD002179,product_id,product_id 'P9761' not found in master,Consistency,product_id must exist in product master,Critical,CONFIRMED
+orders.csv,ORD001799,store_id,store_id 'S99' not found in master,Consistency,store_id must exist in store master,Critical,CONFIRMED
+orders.csv,ORD001046,store_id,store_id 'S17' not found in master,Consistency,store_id must exist in store master,Critical,CONFIRMED
+orders.csv,ORD001492,store_id,store_id 'S17' not found in master,Consistency,store_id must exist in store master,Critical,CONFIRMED
+orders.csv,ORD001275,store_id,store_id 'S17' not found in master,Consistency,store_id must exist in store master,Critical,CONFIRMED
+orders.csv,ORD002126,store_id,store_id 'S00' not found in master,Consistency,store_id must exist in store master,Critical,CONFIRMED
+orders.csv,ORD000469,quantity,non-positive quantity 0 (status DELIVERED),Accuracy,quantity > 0,Critical,CONFIRMED
+orders.csv,ORD001296,quantity,non-positive quantity -2 (status DELIVERED),Accuracy,quantity > 0,Critical,CONFIRMED
+orders.csv,ORD001459,quantity,non-positive quantity -3 (status DELIVERED),Accuracy,quantity > 0,Critical,CONFIRMED
+orders.csv,ORD000867,quantity,non-positive quantity -1 (status DELIVERED),Accuracy,quantity > 0,Critical,CONFIRMED
+orders.csv,ORD000462,quantity,non-positive quantity -3 (status DELIVERED),Accuracy,quantity > 0,Critical,CONFIRMED
+orders.csv,ORD002360,quantity,non-positive quantity 0 (status DELIVERED),Accuracy,quantity > 0,Critical,CONFIRMED
+orders.csv,ORD001724,quantity,non-positive quantity 0 (status DELIVERED),Accuracy,quantity > 0,Critical,CONFIRMED
+orders.csv,ORD000099,quantity,non-positive quantity 0 (status DELIVERED),Accuracy,quantity > 0,Critical,CONFIRMED
+orders.csv,ORD001124,quantity,non-positive quantity -1 (status CANCELLED),Accuracy,quantity > 0,Critical,CONFIRMED
+orders.csv,ORD001384,quantity,non-positive quantity -1 (status DELIVERED),Accuracy,quantity > 0,Critical,CONFIRMED
+orders.csv,ORD002103,discount_pct,discount_pct 250 outside 0-100,Validity,0 <= discount_pct <= 100,Critical,CONFIRMED
+orders.csv,ORD001468,discount_pct,discount_pct 120 outside 0-100,Validity,0 <= discount_pct <= 100,Critical,CONFIRMED
+orders.csv,ORD001237,discount_pct,discount_pct 150 outside 0-100,Validity,0 <= discount_pct <= 100,Critical,CONFIRMED
+orders.csv,ORD002103,order_amount,order_amount 492.0 != quantity*unit_price*(1-discount/100) = -738.00,Accuracy,"order_amount = round(qty*unit_price*(1-discount_pct/100),2) +/-0.01",Critical,CONFIRMED
+orders.csv,ORD002305,order_amount,order_amount 6757.5 != quantity*unit_price*(1-discount/100) = 675.75,Accuracy,"order_amount = round(qty*unit_price*(1-discount_pct/100),2) +/-0.01",Critical,CONFIRMED
+orders.csv,ORD002004,order_amount,order_amount 6720.0 != quantity*unit_price*(1-discount/100) = 672.00,Accuracy,"order_amount = round(qty*unit_price*(1-discount_pct/100),2) +/-0.01",Critical,CONFIRMED
+orders.csv,ORD000845,order_amount,order_amount 4712.0 != quantity*unit_price*(1-discount/100) = 471.20,Accuracy,"order_amount = round(qty*unit_price*(1-discount_pct/100),2) +/-0.01",Critical,CONFIRMED
+orders.csv,ORD000964,order_amount,order_amount 8370.0 != quantity*unit_price*(1-discount/100) = 837.00,Accuracy,"order_amount = round(qty*unit_price*(1-discount_pct/100),2) +/-0.01",Critical,CONFIRMED
+orders.csv,ORD002298,order_amount,order_amount 305.1 != quantity*unit_price*(1-discount/100) = 610.20,Accuracy,"order_amount = round(qty*unit_price*(1-discount_pct/100),2) +/-0.01",Critical,CONFIRMED
+orders.csv,ORD002031,order_amount,order_amount 3210.0 != quantity*unit_price*(1-discount/100) = 321.00,Accuracy,"order_amount = round(qty*unit_price*(1-discount_pct/100),2) +/-0.01",Critical,CONFIRMED
+orders.csv,ORD000801,order_amount,order_amount 5467.5 != quantity*unit_price*(1-discount/100) = 3645.00,Accuracy,"order_amount = round(qty*unit_price*(1-discount_pct/100),2) +/-0.01",Critical,CONFIRMED
+orders.csv,ORD000880,order_amount,order_amount 517.65 != quantity*unit_price*(1-discount/100) = 345.10,Accuracy,"order_amount = round(qty*unit_price*(1-discount_pct/100),2) +/-0.01",Critical,CONFIRMED
+orders.csv,ORD001274,order_amount,order_amount 110.0 != quantity*unit_price*(1-discount/100) = 220.00,Accuracy,"order_amount = round(qty*unit_price*(1-discount_pct/100),2) +/-0.01",Critical,CONFIRMED
+orders.csv,ORD000677,order_amount,order_amount 394.2 != quantity*unit_price*(1-discount/100) = 262.80,Accuracy,"order_amount = round(qty*unit_price*(1-discount_pct/100),2) +/-0.01",Critical,CONFIRMED
+orders.csv,ORD002223,order_amount,order_amount 36.58 != quantity*unit_price*(1-discount/100) = 73.15,Accuracy,"order_amount = round(qty*unit_price*(1-discount_pct/100),2) +/-0.01",Critical,CONFIRMED
+orders.csv,ORD002128,order_amount,order_amount 265.5 != quantity*unit_price*(1-discount/100) = 177.00,Accuracy,"order_amount = round(qty*unit_price*(1-discount_pct/100),2) +/-0.01",Critical,CONFIRMED
+orders.csv,ORD001624,order_amount,order_amount 9576.0 != quantity*unit_price*(1-discount/100) = 957.60,Accuracy,"order_amount = round(qty*unit_price*(1-discount_pct/100),2) +/-0.01",Critical,CONFIRMED
+orders.csv,ORD002244,order_amount,order_amount 108.3 != quantity*unit_price*(1-discount/100) = 72.20,Accuracy,"order_amount = round(qty*unit_price*(1-discount_pct/100),2) +/-0.01",Critical,CONFIRMED
+orders.csv,ORD001755,order_amount,order_amount 730.0 != quantity*unit_price*(1-discount/100) = 1460.00,Accuracy,"order_amount = round(qty*unit_price*(1-discount_pct/100),2) +/-0.01",Critical,CONFIRMED
+orders.csv,ORD001468,order_amount,order_amount 547.2 != quantity*unit_price*(1-discount/100) = -136.80,Accuracy,"order_amount = round(qty*unit_price*(1-discount_pct/100),2) +/-0.01",Critical,CONFIRMED
+orders.csv,ORD001237,order_amount,order_amount 2408.0 != quantity*unit_price*(1-discount/100) = -1505.00,Accuracy,"order_amount = round(qty*unit_price*(1-discount_pct/100),2) +/-0.01",Critical,CONFIRMED
+orders.csv,ORD000500,order_status,invalid order_status 'Pending??',Validity,order_status in DELIVERED/CANCELLED/RETURNED,Critical,CONFIRMED
+orders.csv,ORD001970,order_status,invalid order_status 'Pending??',Validity,order_status in DELIVERED/CANCELLED/RETURNED,Critical,CONFIRMED
+orders.csv,ORD001637,order_status,invalid order_status 'Pending??',Validity,order_status in DELIVERED/CANCELLED/RETURNED,Critical,CONFIRMED
+orders.csv,ORD001066,order_status,non-canonical casing 'delivered',Consistency,upper-case order_status during standardisation,Warning,CONFIRMED
+orders.csv,ORD000153,order_status,non-canonical casing 'delivered',Consistency,upper-case order_status during standardisation,Warning,CONFIRMED
+orders.csv,ORD001812,payment_mode,unmappable payment_mode 'Cashh',Validity,payment_mode in UPI/Card/Cash on Delivery/Wallet after mapping,Critical,CONFIRMED
+orders.csv,ORD001414,payment_mode,unmappable payment_mode 'Cashh',Validity,payment_mode in UPI/Card/Cash on Delivery/Wallet after mapping,Critical,CONFIRMED
+orders.csv,ORD000159,payment_mode,non-canonical payment_mode 'upi' -> UPI,Consistency,trim + map payment_mode synonyms,Warning,CONFIRMED
+orders.csv,ORD001364,payment_mode,non-canonical payment_mode 'CARD' -> Card,Consistency,trim + map payment_mode synonyms,Warning,CONFIRMED
+orders.csv,ORD000433,payment_mode,non-canonical payment_mode 'upi' -> UPI,Consistency,trim + map payment_mode synonyms,Warning,CONFIRMED
+orders.csv,ORD002356,payment_mode,non-canonical payment_mode 'UPI ' -> UPI,Consistency,trim + map payment_mode synonyms,Warning,CONFIRMED
+orders.csv,ORD001640,payment_mode,non-canonical payment_mode 'cod' -> Cash on Delivery,Consistency,trim + map payment_mode synonyms,Warning,CONFIRMED
+orders.csv,ORD001874,payment_mode,non-canonical payment_mode 'UPI ' -> UPI,Consistency,trim + map payment_mode synonyms,Warning,CONFIRMED
+orders.csv,ORD000934,payment_mode,non-canonical payment_mode 'upi' -> UPI,Consistency,trim + map payment_mode synonyms,Warning,CONFIRMED
+orders.csv,ORD000691,payment_mode,non-canonical payment_mode 'upi' -> UPI,Consistency,trim + map payment_mode synonyms,Warning,CONFIRMED
+orders.csv,ORD001554,delivery_minutes,DELIVERED order without delivery_minutes,Completeness,DELIVERED orders must have delivery_minutes,Critical,CONFIRMED
+orders.csv,ORD001800,delivery_minutes,DELIVERED order without delivery_minutes,Completeness,DELIVERED orders must have delivery_minutes,Critical,CONFIRMED
+orders.csv,ORD000731,delivery_minutes,DELIVERED order without delivery_minutes,Completeness,DELIVERED orders must have delivery_minutes,Critical,CONFIRMED
+orders.csv,ORD001277,delivery_minutes,DELIVERED order without delivery_minutes,Completeness,DELIVERED orders must have delivery_minutes,Critical,CONFIRMED
+orders.csv,ORD000326,delivery_minutes,DELIVERED order without delivery_minutes,Completeness,DELIVERED orders must have delivery_minutes,Critical,CONFIRMED
+orders.csv,ORD001515,delivery_minutes,DELIVERED order without delivery_minutes,Completeness,DELIVERED orders must have delivery_minutes,Critical,CONFIRMED
+orders.csv,ORD002229,delivery_minutes,DELIVERED order without delivery_minutes,Completeness,DELIVERED orders must have delivery_minutes,Critical,CONFIRMED
+orders.csv,ORD000878,delivery_minutes,DELIVERED order without delivery_minutes,Completeness,DELIVERED orders must have delivery_minutes,Critical,CONFIRMED
+orders.csv,ORD001037,delivery_minutes,"delivery_minutes 480 (>= 120, hours not minutes)",Accuracy,delivery_minutes < 120,Critical,CONFIRMED
+orders.csv,ORD002101,delivery_minutes,"delivery_minutes 480 (>= 120, hours not minutes)",Accuracy,delivery_minutes < 120,Critical,CONFIRMED
+orders.csv,ORD000455,delivery_minutes,"delivery_minutes 1440 (>= 120, hours not minutes)",Accuracy,delivery_minutes < 120,Critical,CONFIRMED
+orders.csv,ORD001104,delivery_minutes,"delivery_minutes 900 (>= 120, hours not minutes)",Accuracy,delivery_minutes < 120,Critical,CONFIRMED
+orders.csv,ORD000020,delivery_minutes,"delivery_minutes 900 (>= 120, hours not minutes)",Accuracy,delivery_minutes < 120,Critical,CONFIRMED
+orders.csv,ORD000424,delivery_minutes,"delivery_minutes 480 (>= 120, hours not minutes)",Accuracy,delivery_minutes < 120,Critical,CONFIRMED
+payments.csv,PAY0000509,payment_id,duplicate payment_id (exact duplicate row),Uniqueness,payment_id unique; quarantine extra copy,Critical,CONFIRMED
+payments.csv,PAY0001651,payment_id,duplicate payment_id (exact duplicate row),Uniqueness,payment_id unique; quarantine extra copy,Critical,CONFIRMED
+payments.csv,PAY0002000,payment_id,duplicate payment_id (exact duplicate row),Uniqueness,payment_id unique; quarantine extra copy,Critical,CONFIRMED
+payments.csv,PAY0000755,payment_id,duplicate payment_id (exact duplicate row),Uniqueness,payment_id unique; quarantine extra copy,Critical,CONFIRMED
+payments.csv,PAY0002219,order_id,orphan payment: order_id ORD970544 not in orders,Consistency,payments.order_id must exist in orders,Critical,CONFIRMED
+payments.csv,PAY0002220,order_id,orphan payment: order_id ORD968496 not in orders,Consistency,payments.order_id must exist in orders,Critical,CONFIRMED
+payments.csv,PAY0002223,order_id,orphan payment: order_id ORD988106 not in orders,Consistency,payments.order_id must exist in orders,Critical,CONFIRMED
+payments.csv,PAY0002221,order_id,orphan payment: order_id ORD941071 not in orders,Consistency,payments.order_id must exist in orders,Critical,CONFIRMED
+payments.csv,PAY0002224,order_id,orphan payment: order_id ORD981600 not in orders,Consistency,payments.order_id must exist in orders,Critical,CONFIRMED
+payments.csv,PAY0002218,order_id,orphan payment: order_id ORD997176 not in orders,Consistency,payments.order_id must exist in orders,Critical,CONFIRMED
+payments.csv,PAY0002222,order_id,orphan payment: order_id ORD953136 not in orders,Consistency,payments.order_id must exist in orders,Critical,CONFIRMED
+payments.csv,PAY0002217,order_id,orphan payment: order_id ORD966342 not in orders,Consistency,payments.order_id must exist in orders,Critical,CONFIRMED
+payments.csv,PAY0000396,payment_ts,future payment_ts 2026-11-02 18:40:52,Timeliness,payment_ts <= batch cut-off,Critical,CONFIRMED
+payments.csv,PAY0000127,payment_ts,future payment_ts 2027-01-01 09:01:37,Timeliness,payment_ts <= batch cut-off,Critical,CONFIRMED
+payments.csv,PAY0001908,payment_ts,future payment_ts 2027-01-01 09:01:46,Timeliness,payment_ts <= batch cut-off,Critical,CONFIRMED
+payments.csv,PAY0001037,payment_ts,future payment_ts 2027-01-01 09:01:02,Timeliness,payment_ts <= batch cut-off,Critical,CONFIRMED
+payments.csv,PAY0000337,payment_ts,future payment_ts 2026-10-21 10:15:38,Timeliness,payment_ts <= batch cut-off,Critical,CONFIRMED
+payments.csv,PAY0001488,payment_ts,future payment_ts 2026-11-02 18:41:31,Timeliness,payment_ts <= batch cut-off,Critical,CONFIRMED
+payments.csv,PAY0000267,payment_ts,future payment_ts 2026-10-21 10:16:40,Timeliness,payment_ts <= batch cut-off,Critical,CONFIRMED
+payments.csv,PAY0001568,amount_paid,SUCCESS payment with non-positive amount -43.05,Accuracy,SUCCESS amount_paid > 0,Critical,CONFIRMED
+payments.csv,PAY0002175,amount_paid,SUCCESS payment with non-positive amount -188.7,Accuracy,SUCCESS amount_paid > 0,Critical,CONFIRMED
+payments.csv,PAY0000116,amount_paid,SUCCESS payment with non-positive amount 0.0,Accuracy,SUCCESS amount_paid > 0,Critical,CONFIRMED
+payments.csv,PAY0000751,amount_paid,SUCCESS payment with non-positive amount -1593.0,Accuracy,SUCCESS amount_paid > 0,Critical,CONFIRMED
+payments.csv,PAY0000944,amount_paid,SUCCESS payment with non-positive amount -1279.65,Accuracy,SUCCESS amount_paid > 0,Critical,CONFIRMED
+payments.csv,PAY0000791,amount_paid,SUCCESS payment with non-positive amount -500.65,Accuracy,SUCCESS amount_paid > 0,Critical,CONFIRMED
+payments.csv,PAY0001111,amount_paid,SUCCESS payment with non-positive amount 0.0,Accuracy,SUCCESS amount_paid > 0,Critical,CONFIRMED
+payments.csv,PAY0001322,amount_paid,SUCCESS payment with non-positive amount 0.0,Accuracy,SUCCESS amount_paid > 0,Critical,CONFIRMED
+payments.csv,PAY0000954,amount_paid,SUCCESS payment with non-positive amount 0.0,Accuracy,SUCCESS amount_paid > 0,Critical,CONFIRMED
+payments.csv,PAY0000737,amount_paid,SUCCESS payment with non-positive amount -394.0,Accuracy,SUCCESS amount_paid > 0,Critical,CONFIRMED
+payments.csv,PAY0001568,amount_paid,SUCCESS amount_paid -43.05 != order_amount 56.95 for ORD001031,Consistency,SUCCESS amount_paid = order_amount (reconciliation),Critical,CONFIRMED
+payments.csv,PAY0000354,amount_paid,SUCCESS amount_paid 455.0 != order_amount 505.0 for ORD001937,Consistency,SUCCESS amount_paid = order_amount (reconciliation),Critical,CONFIRMED
+payments.csv,PAY0000779,amount_paid,SUCCESS amount_paid 2.6 != order_amount 102.6 for ORD001840,Consistency,SUCCESS amount_paid = order_amount (reconciliation),Critical,CONFIRMED
+payments.csv,PAY0000323,amount_paid,SUCCESS amount_paid 182.95 != order_amount 192.95 for ORD001864,Consistency,SUCCESS amount_paid = order_amount (reconciliation),Critical,CONFIRMED
+payments.csv,PAY0001167,amount_paid,SUCCESS amount_paid 452.35 != order_amount 502.35 for ORD001753,Consistency,SUCCESS amount_paid = order_amount (reconciliation),Critical,CONFIRMED
+payments.csv,PAY0001499,amount_paid,SUCCESS amount_paid 349.3 != order_amount 374.3 for ORD001832,Consistency,SUCCESS amount_paid = order_amount (reconciliation),Critical,CONFIRMED
+payments.csv,PAY0000909,amount_paid,SUCCESS amount_paid 103.0 != order_amount 203.0 for ORD001360,Consistency,SUCCESS amount_paid = order_amount (reconciliation),Critical,CONFIRMED
+payments.csv,PAY0000586,amount_paid,SUCCESS amount_paid 2.6 != order_amount 102.6 for ORD000481,Consistency,SUCCESS amount_paid = order_amount (reconciliation),Critical,CONFIRMED
+payments.csv,PAY0000161,amount_paid,SUCCESS amount_paid 232.2 != order_amount 282.2 for ORD001039,Consistency,SUCCESS amount_paid = order_amount (reconciliation),Critical,CONFIRMED
+payments.csv,PAY0002183,amount_paid,SUCCESS amount_paid 955.4 != order_amount 980.4 for ORD000371,Consistency,SUCCESS amount_paid = order_amount (reconciliation),Critical,CONFIRMED
+payments.csv,PAY0000044,amount_paid,SUCCESS amount_paid 353.0 != order_amount 378.0 for ORD001812,Consistency,SUCCESS amount_paid = order_amount (reconciliation),Critical,CONFIRMED
+payments.csv,PAY0001813,amount_paid,SUCCESS amount_paid 402.4 != order_amount 502.4 for ORD001572,Consistency,SUCCESS amount_paid = order_amount (reconciliation),Critical,CONFIRMED
+payments.csv,PAY0001139,amount_paid,SUCCESS amount_paid 353.0 != order_amount 378.0 for ORD000178,Consistency,SUCCESS amount_paid = order_amount (reconciliation),Critical,CONFIRMED
+payments.csv,PAY0000429,amount_paid,SUCCESS amount_paid 218.2 != order_amount 243.2 for ORD002185,Consistency,SUCCESS amount_paid = order_amount (reconciliation),Critical,CONFIRMED
+payments.csv,PAY0000522,payment_mode,unmappable payment_mode 'Cashh',Validity,payment_mode allowed list after mapping,Critical,CONFIRMED
+payments.csv,PAY0000044,payment_mode,unmappable payment_mode 'Cashh',Validity,payment_mode allowed list after mapping,Critical,CONFIRMED
+payments.csv,PAY0002188,payment_mode,non-canonical payment_mode 'upi',Consistency,trim + map payment_mode synonyms,Warning,CONFIRMED
+payments.csv,PAY0001850,payment_mode,non-canonical payment_mode 'upi',Consistency,trim + map payment_mode synonyms,Warning,CONFIRMED
+payments.csv,PAY0001954,payment_mode,non-canonical payment_mode 'cod',Consistency,trim + map payment_mode synonyms,Warning,CONFIRMED
+payments.csv,PAY0000817,payment_mode,non-canonical payment_mode 'upi',Consistency,trim + map payment_mode synonyms,Warning,CONFIRMED
+payments.csv,PAY0001359,payment_mode,non-canonical payment_mode 'CARD',Consistency,trim + map payment_mode synonyms,Warning,CONFIRMED
+payments.csv,PAY0002208,payment_mode,non-canonical payment_mode 'upi',Consistency,trim + map payment_mode synonyms,Warning,CONFIRMED
+payments.csv,PAY0002113,payment_mode,non-canonical payment_mode 'UPI ',Consistency,trim + map payment_mode synonyms,Warning,CONFIRMED
+payments.csv,PAY0001862,payment_mode,non-canonical payment_mode 'UPI ',Consistency,trim + map payment_mode synonyms,Warning,CONFIRMED
+payments.csv,301 rows (all payment_mode=Cash on Delivery: True),gateway_ref,gateway_ref blank,Completeness,gateway_ref required for non-COD payments only,Warning,CONFIRMED
+orders.csv / payments.csv,ORD001113,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD000737,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD001398,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD002078,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD001570,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD000994,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD000984,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD000504,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD001881,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD000525,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD000805,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD001218,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD001292,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD002178,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD001730,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD002242,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD000652,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD000085,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD000566,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD000895,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD001645,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD000466,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD000961,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD000673,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD002326,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD000127,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+orders.csv / payments.csv,ORD001284,order_id,DELIVERED order has no payment record,Consistency,every DELIVERED order has a SUCCESS payment (reconciliation),Warning,CONFIRMED
+customers.csv,C00103,customer_id,"duplicate customer_id; conflicting columns: phone, area, pincode",Uniqueness,"one row per customer_id; keep first file occurrence, quarantine the other",Critical,CONFIRMED
+customers.csv,C00252,customer_id,"duplicate customer_id; conflicting columns: phone, area, pincode",Uniqueness,"one row per customer_id; keep first file occurrence, quarantine the other",Critical,CONFIRMED
+customers.csv,C00226,customer_id,duplicate customer_id; conflicting columns: phone,Uniqueness,"one row per customer_id; keep first file occurrence, quarantine the other",Critical,CONFIRMED
+customers.csv,C00036,customer_id,"duplicate customer_id; conflicting columns: phone, area, pincode",Uniqueness,"one row per customer_id; keep first file occurrence, quarantine the other",Critical,CONFIRMED
+customers.csv,C00313,customer_id,"duplicate customer_id; conflicting columns: phone, area, pincode",Uniqueness,"one row per customer_id; keep first file occurrence, quarantine the other",Critical,CONFIRMED
+customers.csv,C00337,email,email placeholder 'N/A',Validity,email matches name@domain.tld,Warning,CONFIRMED
+customers.csv,C00307,email,email missing '@',Validity,email matches name@domain.tld,Warning,CONFIRMED
+customers.csv,C00063,email,email domain has no TLD,Validity,email matches name@domain.tld,Warning,CONFIRMED
+customers.csv,C00045,email,email placeholder 'N/A',Validity,email matches name@domain.tld,Warning,CONFIRMED
+customers.csv,C00363,email,email missing '@',Validity,email matches name@domain.tld,Warning,CONFIRMED
+customers.csv,C00310,email,email domain has no TLD,Validity,email matches name@domain.tld,Warning,CONFIRMED
+customers.csv,C00327,email,email placeholder 'N/A',Validity,email matches name@domain.tld,Warning,CONFIRMED
+customers.csv,C00112,email,email domain has no TLD,Validity,email matches name@domain.tld,Warning,CONFIRMED
+customers.csv,C00193,email,email placeholder 'N/A',Validity,email matches name@domain.tld,Warning,CONFIRMED
+customers.csv,C00392,email,email missing '@',Validity,email matches name@domain.tld,Warning,CONFIRMED
+customers.csv,C00062,email,email missing '@',Validity,email matches name@domain.tld,Warning,CONFIRMED
+customers.csv,C00067,email,email missing '@',Validity,email matches name@domain.tld,Warning,CONFIRMED
+customers.csv,C00151,phone,phone has 9 digits (expected 10),Validity,phone is 10 digits starting 6-9,Warning,CONFIRMED
+customers.csv,C00240,phone,phone has 8 digits (expected 10),Validity,phone is 10 digits starting 6-9,Warning,CONFIRMED
+customers.csv,C00095,phone,phone has 9 digits (expected 10),Validity,phone is 10 digits starting 6-9,Warning,CONFIRMED
+customers.csv,C00357,phone,phone has 9 digits (expected 10),Validity,phone is 10 digits starting 6-9,Warning,CONFIRMED
+customers.csv,C00130,phone,phone has 9 digits (expected 10),Validity,phone is 10 digits starting 6-9,Warning,CONFIRMED
+customers.csv,C00290,phone,phone has 7 digits (expected 10),Validity,phone is 10 digits starting 6-9,Warning,CONFIRMED
+customers.csv,C00339,phone,phone has 9 digits (expected 10),Validity,phone is 10 digits starting 6-9,Warning,CONFIRMED
+customers.csv,C00132,pincode,invalid pincode '5600XX',Validity,pincode is 6 digits starting 56 (Bengaluru),Warning,CONFIRMED
+customers.csv,C00395,pincode,invalid pincode '000000',Validity,pincode is 6 digits starting 56 (Bengaluru),Warning,CONFIRMED
+customers.csv,C00083,pincode,invalid pincode '5600XX',Validity,pincode is 6 digits starting 56 (Bengaluru),Warning,CONFIRMED
+customers.csv,C00342,pincode,invalid pincode '000000',Validity,pincode is 6 digits starting 56 (Bengaluru),Warning,CONFIRMED
+customers.csv,C00166,pincode,invalid pincode '5600XX',Validity,pincode is 6 digits starting 56 (Bengaluru),Warning,CONFIRMED
+customers.csv,C00355,city,city blank,Completeness,default city from area/pincode or flag,Warning,CONFIRMED
+customers.csv,C00394,city,city blank,Completeness,default city from area/pincode or flag,Warning,CONFIRMED
+customers.csv,C00233,city,city blank,Completeness,default city from area/pincode or flag,Warning,CONFIRMED
+customers.csv,C00142,city,city blank,Completeness,default city from area/pincode or flag,Warning,CONFIRMED
+customers.csv,C00328,city,city blank,Completeness,default city from area/pincode or flag,Warning,CONFIRMED
+customers.csv,C00219,city,city blank,Completeness,default city from area/pincode or flag,Warning,CONFIRMED
+customers.csv,C00400,signup_date,future signup_date 2027-01-05,Timeliness,signup_date <= batch cut-off,Critical,CONFIRMED
+customers.csv,C00398,signup_date,future signup_date 2026-11-12,Timeliness,signup_date <= batch cut-off,Critical,CONFIRMED
+customers.csv,C00038,signup_date,future signup_date 2026-12-20,Timeliness,signup_date <= batch cut-off,Critical,CONFIRMED
+customers.csv,C00199,loyalty_tier,non-canonical casing 'SILVER',Consistency,title-case loyalty_tier,Warning,CONFIRMED
+customers.csv,C00171,loyalty_tier,non-canonical casing 'SILVER',Consistency,title-case loyalty_tier,Warning,CONFIRMED
+customers.csv,C00133,loyalty_tier,non-canonical casing 'BRONZE',Consistency,title-case loyalty_tier,Warning,CONFIRMED
+customers.csv,C00032,loyalty_tier,non-canonical casing 'bronze',Consistency,title-case loyalty_tier,Warning,CONFIRMED
+customers.csv,C00031,loyalty_tier,non-canonical casing 'bronze',Consistency,title-case loyalty_tier,Warning,CONFIRMED
+customers.csv,C00196,loyalty_tier,non-canonical casing 'bronze',Consistency,title-case loyalty_tier,Warning,CONFIRMED
+customers.csv,C00136,loyalty_tier,non-canonical casing 'BRONZE',Consistency,title-case loyalty_tier,Warning,CONFIRMED
+customers.csv,C00092,loyalty_tier,non-canonical casing 'BRONZE',Consistency,title-case loyalty_tier,Warning,CONFIRMED
+customers.csv,area=Hebbal,pincode,area maps to 2 different pincodes,Consistency,area->pincode should be 1:1 (incl. invalid pincodes),Warning,CONFIRMED
+customers.csv,area=Indiranagar,pincode,area maps to 3 different pincodes,Consistency,area->pincode should be 1:1 (incl. invalid pincodes),Warning,CONFIRMED
+customers.csv,area=JP Nagar,pincode,area maps to 2 different pincodes,Consistency,area->pincode should be 1:1 (incl. invalid pincodes),Warning,CONFIRMED
+products.csv,P0030,product_id,duplicate product_id; superseded row 'Kaveri Dairy Milk 5 (old)' mrp 45.0,Uniqueness,"one row per product_id; keep current row, quarantine '(old)' row",Critical,CONFIRMED
+products.csv,P0140,product_id,duplicate product_id; superseded row 'CleanPro Detergent 15 (old)' mrp 328.0,Uniqueness,"one row per product_id; keep current row, quarantine '(old)' row",Critical,CONFIRMED
+products.csv,P0109,mrp,non-positive mrp -203.0 (orders sell at 203.0),Accuracy,mrp > 0,Critical,CONFIRMED
+products.csv,P0019,cost_price,cost_price 264.0 > mrp 220.0 (ratio 1.20),Accuracy,cost_price <= mrp,Critical,CONFIRMED
+products.csv,P0073,cost_price,cost_price 334.8 > mrp 279.0 (ratio 1.20),Accuracy,cost_price <= mrp,Critical,CONFIRMED
+products.csv,P0074,cost_price,cost_price 420.0 > mrp 350.0 (ratio 1.20),Accuracy,cost_price <= mrp,Critical,CONFIRMED
+products.csv,P0117,cost_price,cost_price 92.4 > mrp 77.0 (ratio 1.20),Accuracy,cost_price <= mrp,Critical,CONFIRMED
+products.csv,P0051,category,category blank (sub_category Dal),Completeness,category not null,Critical,CONFIRMED
+products.csv,P0060,category,category blank (sub_category Rice),Completeness,category not null,Critical,CONFIRMED
+products.csv,P0068,category,category blank (sub_category Oil),Completeness,category not null,Critical,CONFIRMED
+stores.csv,S07,zone,zone blank,Completeness,zone in North/South/East/West,Critical,CONFIRMED
+stores.csv,S12,capacity_orders_per_day,capacity_orders_per_day 0,Accuracy,capacity_orders_per_day > 0,Critical,CONFIRMED
+stores.csv,"S00,S17,S99",store_id,store_ids used in orders but missing from store master,Consistency,store master must contain every operating store,Critical,CONFIRMED
